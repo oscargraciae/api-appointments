@@ -1,0 +1,39 @@
+{
+   "name": "api",
+   "version": "1.0.0",
+   "description": "API REST Boombook",
+   "main": "index.js",
+   "author": "Oscar G",
+   "license": "MIT",
+   "scripts": {
+      "watch": "tsc -w",
+      "dev": "nodemon dist/index.js",
+      "start": "ts-node src/index.ts",
+      "start2": "ts-node src/index.ts"
+   },
+   "dependencies": {
+      "argon2": "^0.27.1",
+      "body-parser": "^1.19.0",
+      "connect-redis": "^5.0.0",
+      "cors": "^2.8.5",
+      "express": "^4.17.1",
+      "express-session": "^1.17.1",
+      "jsonwebtoken": "^8.5.1",
+      "mysql": "^2.14.1",
+      "pg": "^8.5.1",
+      "redis": "^3.0.2",
+      "reflect-metadata": "^0.1.10",
+      "typeorm": "0.2.29",
+      "typeorm-naming-strategies": "^2.0.0"
+   },
+   "devDependencies": {
+      "@types/cors": "^2.8.9",
+      "@types/express": "^4.17.9",
+      "@types/express-session": "^1.17.0",
+      "@types/node": "^8.0.29",
+      "@types/redis": "^2.8.28",
+      "nodemon": "^2.0.6",
+      "ts-node": "3.3.0",
+      "typescript": "3.3.3333"
+   }
+}

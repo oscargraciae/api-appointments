@@ -1,0 +1,11 @@
+
+{
+   "type": "postgres",
+   "host": "localhost",
+   "port": 5432,
+   "username": "postgres",
+   "password": "desarrollo",
+   "database": "boombook_dev",
+   "entities": ["dist/entities/*.js"],
+   "migrations": ["dist/migrations/*.js"]
+ }
