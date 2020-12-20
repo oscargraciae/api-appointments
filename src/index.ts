@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import redis from 'redis';
 import session from 'express-session';
+import morgan from 'morgan';
 
 import setupDB from './database';
 import routesManager from './config/routesManager';
@@ -18,6 +19,7 @@ const main = () => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(cors());
+  app.use(morgan('dev'));
 
   const redisClient = redis.createClient();
   app.use(session({

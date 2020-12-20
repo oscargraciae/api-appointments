@@ -1,4 +1,4 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Business } from "./Business";
 
 @Entity({ name: 'business_services' })
@@ -19,9 +19,12 @@ export class BusinessService extends BaseEntity {
   @Column()
   time: number // tiempo en minutos, ejemplo: 15, 30, 45 minutos
 
-  @OneToOne(() => Business)
+  @ManyToOne(() => Business, business => business.bussinessService)
   @JoinColumn()
   business: Business
+
+  @Column()
+  businessId: number
 
   @CreateDateColumn()
   createdAt = new Date()

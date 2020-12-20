@@ -1,11 +1,13 @@
-import { MyContext } from "../../config/types";
+import { Response } from "express";
 
 import { BusinessUser } from "../../entity/BusinessUser";
 import { Business } from "../../entity/Business";
 
+import { MyRequest } from "../../config/types";
+
 class BusinessController {
 
-  async getBusiness({ req, res }: MyContext) {
+  async getBusiness(req: MyRequest, res: Response) {
     try {
       const business = await BusinessUser.findOne({
         where: { userId: req.session.userId },
@@ -21,7 +23,7 @@ class BusinessController {
     }
   }
 
-  async create({ req, res }: MyContext) {
+  async create(req: MyRequest, res: Response) {
     try {
       const body: Business = req.body;
       const business = await Business.create(body).save();
@@ -37,7 +39,7 @@ class BusinessController {
     }
   }
 
-  async update({ req, res }: MyContext) {
+  async update(req: MyRequest, res: Response) {
     try {
       // Con este query se consulta el negocio realacionado al usuario que esta en sesion
       // const business = await getConnection()
