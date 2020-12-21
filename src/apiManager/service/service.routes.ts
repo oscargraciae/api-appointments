@@ -5,7 +5,8 @@ import { ServiceController } from "./service.controller";
 const router = Router();
 const service = new ServiceController();
 
-router.post('/', isAuth, service.create);
 router.get('/', isAuth, service.getAll);
+router.post('/', isAuth, service.create);
+router.put('/:id', isAuth, service.update);
 
 export default router;

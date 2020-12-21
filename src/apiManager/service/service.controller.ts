@@ -31,7 +31,8 @@ export class ServiceController {
   async update(req: MyRequest, res: Response) {
     try {
       const id: number = Number(req.params.id);
-      const service = await BusinessService.update({ id }, req.body);
+      const body: BusinessService = req.body;
+      const service = await BusinessService.update({ id }, body);
       return res.json({ success: true, service });
     } catch (error) {
       return res.json({ success: false, message: error.message });
