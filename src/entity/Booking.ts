@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { BookingStatus } from "./BookingStatus";
 import { Business } from "./Business";
 import { User } from "./User";
@@ -21,15 +21,24 @@ export class Booking extends BaseEntity {
   @Column({ default: true })
   isActive: boolean
 
-  @OneToOne(() => User)
+  @ManyToOne(() => User, user => user.bookings)
   @JoinColumn()
   customer: User
 
-  @OneToOne(() => Business)
+  @Column()
+  customerId: number
+
+  @ManyToOne(() => Business)
   @JoinColumn()
   business: Business
 
-  @OneToOne(() => BookingStatus)
+  @Column()
+  businessId: number
+  
+  @OneToMany(() => BookingStatus, bookingStatus => bookingStatus.bookings)
   @JoinColumn()
   bookingStatus: BookingStatus
+
+  @Column()
+  bookingStatusId: number
 }

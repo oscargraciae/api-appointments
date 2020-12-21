@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Booking } from "./Booking";
 
 @Entity({ name: 'booking_statuses' })
 export class BookingStatus extends BaseEntity {
@@ -8,4 +9,7 @@ export class BookingStatus extends BaseEntity {
 
   @Column()
   name: string
+
+  @ManyToOne(() => Booking, booking => booking.bookingStatus)
+  bookings: Booking[]
 }

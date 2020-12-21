@@ -1,5 +1,6 @@
 import { hash } from "argon2";
 import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Booking } from "./Booking";
 
 import { BusinessUser } from "./BusinessUser";
 
@@ -35,6 +36,9 @@ export class User extends BaseEntity{
 
   @OneToMany(() => BusinessUser, businessUser => businessUser.user)
   businessUser: BusinessUser
+
+  @OneToMany(() => Booking, booking => booking.customer)
+  bookings: Booking[]
 
   @BeforeInsert()
   async hashPassword() {
