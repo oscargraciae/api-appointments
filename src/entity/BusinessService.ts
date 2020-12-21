@@ -26,6 +26,9 @@ export class BusinessService extends BaseEntity {
   @Column()
   businessId: number
 
+  @Column({ default: true })
+  isActive: boolean
+
   @CreateDateColumn()
   createdAt = new Date()
 
