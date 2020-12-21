@@ -12,7 +12,7 @@ export const isAuth = async (req: MyRequest, res: Response, next: NextFunction) 
   if(!businessUser) {
     return res.status(401).json({ success: false, message: 'User not found.' });
   }
-
+  
   req.businessUser = businessUser;
 
   return next();

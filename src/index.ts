@@ -11,6 +11,12 @@ import { COOKIE_NAME } from './config/constants';
 
 const RedisStore = require('connect-redis')(session);
 
+// declare namespace Express {
+//   export interface Request {
+//     customProperty?: string
+//   }
+// }
+
 const main = () => {
   setupDB();
 
