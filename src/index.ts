@@ -24,7 +24,10 @@ const main = () => {
   
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(cors());
+  app.use(cors({
+    origin: 'http://localhost:8002',
+    credentials: true
+  }));
   app.use(morgan('dev'));
 
   const redisClient = redis.createClient();
@@ -37,7 +40,7 @@ const main = () => {
     }),
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
-      httpOnly: true,
+      httpOnly: false,
       sameSite: 'lax',
       secure: false, // only works https,
     },

@@ -7,6 +7,8 @@ const user = new UserController();
 
 router.get('/', isAuth, user.getUser);
 router.post('/', user.create);
+
+router.get('/auth/logout', isAuth, user.logout);
 router.post('/auth', user.login);
 
 export default router;

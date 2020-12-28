@@ -1,19 +1,27 @@
 import { NextFunction, Response } from "express";
 import { BusinessUser } from "../entity/BusinessUser";
 import { MyRequest } from "../config/types";
+import { User } from "../entity/User";
 
 export const isAuth = async (req: MyRequest, res: Response, next: NextFunction) => {
-  if(!req.session.userId) {
-    return res.status(401).json({ success: false, message: 'Unauthorized' });
-  }
-
-  const businessUser = await BusinessUser.findOne({ where: { userId: req.session.userId } });
-
-  if(!businessUser) {
-    return res.status(401).json({ success: false, message: 'User not found.' });
-  }
+  try {
+    if(!req.session.userId) {
+      return res.status(401).json({ success: false, message: 'Unauthorized' });
+    }
   
-  req.businessUser = businessUser;
-
-  return next();
+    // const businessUser = await BusinessUser.findOne({ where: { userId: req.session.userId } });
+    const user = await User.findOne({
+      where: { id: req.session.userId },
+    });
+  
+    if(!user) {
+      return res.status(401).json({ success: false, message: 'User not found.' });
+    }
+    
+    req.businessUser = user;
+  
+    return next();
+  } catch (error) {
+    return res.json({success: true, message: error.message });
+  }
 }

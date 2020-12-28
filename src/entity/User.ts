@@ -1,5 +1,5 @@
 import { hash } from "argon2";
-import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, Exclusion, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Booking } from "./Booking";
 
 import { BusinessUser } from "./BusinessUser";
@@ -13,7 +13,7 @@ export class User extends BaseEntity{
   @Column({ unique: true })
   email: string
 
-  @Column()
+  @Column({ select: false })
   password: string
 
   @Column()
@@ -34,7 +34,11 @@ export class User extends BaseEntity{
   @UpdateDateColumn()
   updatedAt = new Date()
 
-  @OneToMany(() => BusinessUser, businessUser => businessUser.user)
+  // @OneToOne(() => BusinessUser)
+  // businessUser: BusinessUser
+
+  @OneToOne(() => BusinessUser, businessUser => businessUser.user)
+  // @JoinColumn()
   businessUser: BusinessUser
 
   @OneToMany(() => Booking, booking => booking.customer)

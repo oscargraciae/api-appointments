@@ -24,6 +24,12 @@ export class Business extends BaseEntity{
   @Column({ default: true })
   isActive: boolean
 
+  @Column({ default: false })
+  isPublic: boolean
+
+  @Column({ default: false })
+  isCompleted: boolean
+
   @ManyToOne(() => BusinessCategory, businessCategory => businessCategory.business)
   @JoinColumn()
   businessCategory: BusinessCategory;

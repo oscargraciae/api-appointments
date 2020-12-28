@@ -1,4 +1,4 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 import { Business } from "./Business";
 import { User } from "./User";
@@ -9,12 +9,17 @@ export class BusinessUser extends BaseEntity{
   @PrimaryGeneratedColumn()
   id: number
 
-  @ManyToOne(() => User, user => user.businessUser, { eager: true })
-  @JoinColumn({ name: 'user_id' })
-  user: User;
+  @OneToOne(() => User, user => user.businessUser)
+  @JoinColumn()
+  user: User
+
+  // @ManyToOne(() => User, user => user.businessUser, { eager: true })
+  // @JoinColumn({ name: 'user_id' })
+  // user: User;
 
   @Column({ unique: true })
   userId: number;
+  
 
   @ManyToOne(() => Business, business => business.businessUser)
   @JoinColumn()

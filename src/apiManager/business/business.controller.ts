@@ -4,15 +4,35 @@ import { BusinessUser } from "../../entity/BusinessUser";
 import { Business } from "../../entity/Business";
 
 import { MyRequest } from "../../config/types";
+import { getConnection } from "typeorm";
 
 class BusinessController {
 
   async getBusiness(req: MyRequest, res: Response) {
     try {
-      const business = await BusinessUser.findOne({
-        where: { userId: req.session.userId },
-        relations: ['business']
-      });
+      // const business = await BusinessUser.findOne({
+      //   where: { userId: req.session.userId },
+      //   relations: ['business']
+      // });
+
+      // const business = await Business.findOne({
+      //   // where: { userId: req.session.userId },
+      //   relations: ['businessUser'],
+      //   where: {
+      //     businessUser: {
+      //       userId: req.session.userId,
+      //     }
+      // }
+      //   // where: { 'businessUser.userId': req.session.id },
+      // });
+
+      const business = await getConnection()
+        .getRepository(Business)
+        .createQueryBuilder('business')
+        .leftJoinAndSelect('business.businessUser', 'businessUser')
+        // .where('businessUser.userId', req.session.userId)
+        .where("businessUser.userId = :userId", { userId: req.session.userId })
+        .getOne();
 
       return res.json({
         success: true,
@@ -24,9 +44,10 @@ class BusinessController {
   }
 
   async create(req: MyRequest, res: Response) {
+    let business : Business;
     try {
       const body: Business = req.body;
-      const business = await Business.create(body).save();
+      business = await Business.create(body).save();
       if (!business) {
         return res.json({ success: false });
       }
@@ -35,6 +56,7 @@ class BusinessController {
 
       return res.json({ success: true, business })
     } catch (error) {
+      await Business.delete({ id: business.id })
       return res.json({ success: false, message: error.message });
     }
   }
