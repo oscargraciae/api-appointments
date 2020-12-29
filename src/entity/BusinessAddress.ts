@@ -7,28 +7,26 @@ export class BusinessAddress extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column()
+  @Column({ nullable: true })
   street: string
 
-  @Column()
-  streetNumber: string
-
-  @Column()
+  @Column({ nullable: true })
   area: string
 
   @Column({ nullable: true })
   zipcode: string
 
-  @Column()
+  @Column({ nullable: true })
   city: string
 
-  @Column()
+  @Column({ nullable: true })
   state: string
 
-  @Column()
+  // @Column()
+  @Column("float")
   lat: number
 
-  @Column()
+  @Column("float")
   lng: number
 
   @Column()
@@ -37,6 +35,9 @@ export class BusinessAddress extends BaseEntity {
   @OneToOne(() => Business)
   @JoinColumn()
   business: Business
+
+  @Column()
+  businessId: number
 
   @CreateDateColumn()
   createdAt = new Date()

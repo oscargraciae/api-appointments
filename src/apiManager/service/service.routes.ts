@@ -2,7 +2,7 @@ import { Router } from "express";
 import { isAuth } from "../../middleware/isAuthManager";
 import { ServiceController } from "./service.controller";
 
-const router = Router();
+const router = Router({ mergeParams: true });
 const service = new ServiceController();
 
 router.get('/', isAuth, service.getAll);
