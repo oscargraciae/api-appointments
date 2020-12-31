@@ -12,6 +12,7 @@ import { Booking } from '../entity/Booking';
 import { BookingStatus } from '../entity/BookingStatus';
 import { BookingService } from '../entity/BookingService';
 import { Review } from '../entity/Review';
+import { BusinessHour } from '../entity/BusinessHour';
 
 import { __prod__ } from '../config/constants';
 
@@ -36,6 +37,7 @@ const setupDB = async () => {
       BookingStatus,
       BookingService,
       Review,
+      BusinessHour,
     ],
   });
 

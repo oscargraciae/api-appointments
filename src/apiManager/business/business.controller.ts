@@ -2,6 +2,7 @@ import { Response } from "express";
 
 import { BusinessUser } from "../../entity/BusinessUser";
 import { Business } from "../../entity/Business";
+import { BusinessHour } from "../../entity/BusinessHour";
 
 import { MyRequest } from "../../config/types";
 import { getConnection } from "typeorm";
@@ -80,12 +81,37 @@ class BusinessController {
       const id : number = Number(req.params.id);
       const business = await Business.update({ id }, { ...req.body });
       
-      return res.json({ business });
+      return res.json({success: true, business });
     } catch (error) {
       return res.json({
         success: false,
         message: error.message,
       })
+    }
+  }
+
+  async createHours(req: MyRequest, res: Response) {
+    try {
+      console.log('Body', req.body);
+      
+      const values : BusinessHour[] = req.body.days;
+      const businessId : number = Number(req.params.id);
+      const businessHrs = await BusinessHour.findOne({ where: { businessId } })
+      if (businessHrs) {
+        await BusinessHour.delete({ businessId });
+      }
+
+      console.log('Valores a insertar', values);
+      
+      await getConnection()
+        .createQueryBuilder()
+        .insert()
+        .into(BusinessHour)
+        .values(values)
+        .execute();
+      return res.json({ success: true, values });
+    } catch (error) {
+      return res.json({ success: false, message: error.message });
     }
   }
 

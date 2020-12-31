@@ -26,6 +26,24 @@ class UserController {
       });
     }
   }
+
+  async create(req: MyRequest, res: Response) {
+    try {
+      const userBody: User = req.body;
+      const user = await User.create(userBody).save();
+      if (!user) {
+        return res.json({ success: false, message: 'No error al registrar el usuario.' })
+      }
+      
+      req.session!.userId = user.id;
+      res.json({ success: true, user });
+    } catch (error) {
+      res.json({
+        success: false,
+        message: error.message,
+      })
+    }
+  }
   
   async logout(req: MyRequest, res: Response) {
     try {
@@ -69,20 +87,7 @@ class UserController {
     } catch (error) {
      return  res.json({ success: false, message: error.message });
     }
-  }
-
-  async create(req: MyRequest, res: Response) {
-    try {
-      const userBody: User = req.body;
-      const user = await User.create(userBody).save();
-      res.json({ success: true, user });
-    } catch (error) {
-      res.json({
-        success: false,
-        message: error.message,
-      })
-    }
-  }
+  }  
 }
 
 export default UserController;

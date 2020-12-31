@@ -11,4 +11,6 @@ router.get('/', isAuth, business.getBusiness)
 router.post('/', isAuth, business.create)
 router.put('/:id', isAuth, business.update)
 
+router.post('/:id/hours', isAuth, business.createHours)
+
 export default router;

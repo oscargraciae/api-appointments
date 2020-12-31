@@ -1,5 +1,6 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { BusinessCategory } from "./BusinessCategory";
+import { BusinessHour } from "./BusinessHour";
 import { BusinessService } from "./BusinessService";
 import { BusinessUser } from "./BusinessUser";
 
@@ -34,6 +35,12 @@ export class Business extends BaseEntity{
   @JoinColumn()
   businessCategory: BusinessCategory;
 
+  @Column()
+  businessCategoryId: number
+
+  @OneToMany(() => BusinessHour, businessHour => businessHour.business)
+  hours: BusinessHour[]
+
   @OneToMany(() => BusinessService, businessService => businessService.business)
   bussinessService: BusinessService
 
@@ -42,6 +49,7 @@ export class Business extends BaseEntity{
 
   @CreateDateColumn()
   createdAt = new Date()
+
 
   @UpdateDateColumn()
   updatedAt = new Date()
