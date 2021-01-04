@@ -7,7 +7,7 @@ export class ServiceController {
   async getAll(req: MyRequest, res: Response) {
     try {
       const businessId : number = Number(req.params.businessId);
-      const services = await BusinessService.find({ where: { businessId, isActive: true } });
+      const services = await BusinessService.find({ where: { businessId, isActive: true }, order: { id: 'DESC' } });
 
       return res.json({ success: true, services });
     } catch (error) {

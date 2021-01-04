@@ -115,6 +115,16 @@ class BusinessController {
     }
   }
 
+  async getHours(req: MyRequest, res: Response) {
+    try {
+      const businessId : number = Number(req.params.id);
+      const hours = await BusinessHour.find({ where: { businessId }, order: { dayOfWeek: 'ASC' } })
+      return res.json({ success: true, hours });
+    } catch (error) {
+      return res.json({ success: false, message: error.messahe });
+    }
+  }
+
 }
 
 export default BusinessController;

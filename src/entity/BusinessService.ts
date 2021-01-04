@@ -13,7 +13,7 @@ export class BusinessService extends BaseEntity {
   @Column({ nullable: true })
   description: string
 
-  @Column("decimal", { precision: 5, scale: 2 })
+  @Column("decimal", { precision: 10, scale: 2 })
   price: number
 
   @Column()
