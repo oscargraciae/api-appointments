@@ -1,9 +1,7 @@
 import { Response } from 'express';
-import { getConnection } from 'typeorm';
 
 import { auth } from "../../service/auth";
 import { User } from "../../entity/User";
-import { BusinessUser } from '../../entity/BusinessUser';
 import { MyRequest } from "../../config/types";
 import { COOKIE_NAME } from '../../config/constants';
 
@@ -36,9 +34,9 @@ class UserController {
       }
       
       req.session!.userId = user.id;
-      res.json({ success: true, user });
+      return res.json({ success: true, user });
     } catch (error) {
-      res.json({
+      return res.json({
         success: false,
         message: error.message,
       })
@@ -47,7 +45,7 @@ class UserController {
   
   async logout(req: MyRequest, res: Response) {
     try {
-      req.session.destroy(err => {
+      return req.session.destroy(err => {
         res.clearCookie(COOKIE_NAME);
         if (err) {
           res.status(400).send('Unable to log out')

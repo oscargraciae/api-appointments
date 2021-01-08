@@ -1,5 +1,4 @@
 import { NextFunction, Response } from "express";
-import { BusinessUser } from "../entity/BusinessUser";
 import { MyRequest } from "../config/types";
 import { User } from "../entity/User";
 

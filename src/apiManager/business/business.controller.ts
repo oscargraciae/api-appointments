@@ -46,6 +46,7 @@ class BusinessController {
 
   async create(req: MyRequest, res: Response) {
     let business : Business;
+    var bussinessId : number = 0;
     try {
       const body: Business = req.body;
       business = await Business.create(body).save();
@@ -53,11 +54,12 @@ class BusinessController {
         return res.json({ success: false });
       }
 
+      bussinessId = business.id;
       await BusinessUser.create({ userId: req.session.userId, businessId: business.id }).save();
 
       return res.json({ success: true, business })
     } catch (error) {
-      await Business.delete({ id: business.id })
+      await Business.delete({ id: bussinessId })
       return res.json({ success: false, message: error.message });
     }
   }

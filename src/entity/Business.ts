@@ -1,4 +1,5 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BusinessAddress } from "./BusinessAddress";
 import { BusinessCategory } from "./BusinessCategory";
 import { BusinessHour } from "./BusinessHour";
 import { BusinessService } from "./BusinessService";
@@ -37,6 +38,9 @@ export class Business extends BaseEntity{
 
   @Column()
   businessCategoryId: number
+
+  @OneToOne(() => BusinessAddress, businessAddress => businessAddress.business)
+  businessAddress: BusinessAddress
 
   @OneToMany(() => BusinessHour, businessHour => businessHour.business)
   hours: BusinessHour[]

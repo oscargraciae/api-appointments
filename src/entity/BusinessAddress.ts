@@ -32,7 +32,7 @@ export class BusinessAddress extends BaseEntity {
   @Column()
   addressMap: string
 
-  @OneToOne(() => Business)
+  @OneToOne(() => Business, business => business.businessAddress)
   @JoinColumn()
   business: Business
 

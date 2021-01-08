@@ -8,6 +8,8 @@ import morgan from 'morgan';
 import setupDB from './database';
 import routesManager from './config/routesManager';
 import { COOKIE_NAME } from './config/constants';
+import routesMarket from './config/routesMarket';
+import setupSocket from './config/sockets';
 
 const RedisStore = require('connect-redis')(session);
 
@@ -22,10 +24,11 @@ const main = () => {
 
   const app = express();
   
+  app.disable('etag');
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(cors({
-    origin: 'http://localhost:8002',
+    origin: ['http://localhost:8002', 'http://localhost:8000'],
     credentials: true
   }));
   app.use(morgan('dev'));
@@ -49,11 +52,14 @@ const main = () => {
   }))
 
   routesManager(app);
+  routesMarket(app);
 
   const port = process.env.PORT || 8001;
-  app.listen(port, () =>{
+  const server = app.listen(port, () =>{
     console.log('Listening on port: ', port);
   })
+
+  setupSocket(server);
 }
 
 main();

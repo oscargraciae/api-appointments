@@ -2,6 +2,8 @@ import { Response } from 'express'
 
 import { MyRequest } from "../../config/types";
 
+// ENTITIES
+import { BusinessUser } from '../../entity/BusinessUser';
 import { Booking } from '../../entity/Booking';
 
 export class BookingController {
@@ -17,4 +19,23 @@ export class BookingController {
       return res.json({ success: false, message: error.message });
     }
   }
+
+  async getAll(req: MyRequest, res: Response) {
+    try {
+      const businessUser = await BusinessUser.findOne({
+        where: { userId: req.session.userId },
+      })
+      if (!businessUser) {
+        return res.json({ success: false });
+      }
+      const bookings = await Booking.find({ 
+        where: { businessId: businessUser.businessId },
+        relations: ['customer']
+      });
+      return res.json({ success: true, bookings });
+    } catch (error) {
+      return res.json({ success: false, message: error.message });
+    }
+  }
+
 }

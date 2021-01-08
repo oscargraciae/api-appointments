@@ -1,5 +1,4 @@
 import { verify } from 'argon2';
-import { getConnection } from 'typeorm';
 
 import { User } from "../entity/User"
 
