@@ -6,8 +6,6 @@ const router = Router();
 
 const booking = new BookingController();
 
-router.post('/', booking.create);
-router.get('/', isAuth, booking.getAll);
-router.put('/:id', isAuth, booking.update);
+router.post('/', isAuth, booking.create);
 
 export default router;

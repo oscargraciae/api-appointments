@@ -1,4 +1,4 @@
-import { BaseEntity, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Booking } from "./Booking";
 import { BusinessService } from "./BusinessService";
 
@@ -7,11 +7,17 @@ export class BookingService extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
-  @OneToOne(() => Booking)
-  @JoinColumn()
-  booking: Booking
+  // @OneToOne(() => Booking)
+  // @JoinColumn()
+  // booking: Booking
 
-  @OneToOne(() => BusinessService)
-  @JoinColumn()
-  businessService: BusinessService
+  @Column()
+  bookingId: number
+
+  // @OneToOne(() => BusinessService)
+  // @JoinColumn()
+  // businessService: BusinessService
+
+  @Column()
+  businessServiceId: number
 }

@@ -6,6 +6,19 @@ import { MyRequest } from "../../config/types";
 import { COOKIE_NAME } from '../../config/constants';
 
 class UserController {
+  async getUser(req: MyRequest, res: Response) {
+    try {
+      if (!req.session.userId) return res.json({ success: false, message: 'Unauthorized' });
+      const user = await User.findOne({ where: { id: req.session.userId } });
+      if (!user) {
+        return res.json({ success: false, message: 'Unauthorized' });
+      }
+      return res.json({ success: true, user });
+    } catch (error) {
+     return  res.json({ success: false, message: error.message });
+    }
+  }  
+
   async login(req: MyRequest, res: Response) {
     try {
       const { email, password } = req.body;
@@ -58,34 +71,6 @@ class UserController {
     }
   }
 
-  async getUser(req: MyRequest, res: Response) {
-    try {
-      if (!req.session.userId) return res.status(401).json({ success: false, message: 'Unauthorized' });
-      const user = await User.findOne({
-        where: { id: req.session.userId },
-        relations: ['businessUser', 'businessUser.business']
-      });
-
-      
-      // const user = await getConnection()
-      //   .getRepository(BusinessUser)
-      //   .createQueryBuilder("businessUser")
-      //   .leftJoinAndSelect("businessUser.user", "user")
-      //   .getOne();
-
-      // const user = await getConnection()
-      //   .getRepository(User)
-      //   .createQueryBuilder("user")
-      //   .leftJoinAndSelect("user.businessUser", "businessUser")
-      //   .getOne();
-      if (!user) {
-        return res.status(401).json({ success: false, message: 'Unauthorized' });
-      }
-      return res.json({ success: true, user });
-    } catch (error) {
-     return  res.json({ success: false, message: error.message });
-    }
-  }  
 }
 
 export default UserController;

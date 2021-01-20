@@ -9,7 +9,7 @@ interface ISesionParams extends SessionData {
   userId: number
 }
 
-export type MyRequest = Request & { session: Session & Partial<ISesionParams> } & { businessUser?: any }
+export type MyRequest = Request & { session: Session & Partial<ISesionParams> } & { user?: any }
 
 // export type MyContext = {
 //   req: 

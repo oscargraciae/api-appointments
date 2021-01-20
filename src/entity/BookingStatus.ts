@@ -9,7 +9,4 @@ export class BookingStatus extends BaseEntity {
 
   @Column()
   name: string
-
-  @ManyToOne(() => Booking, booking => booking.bookingStatus)
-  bookings: Booking[]
 }

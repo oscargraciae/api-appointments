@@ -46,7 +46,7 @@ export class Business extends BaseEntity{
   hours: BusinessHour[]
 
   @OneToMany(() => BusinessService, businessService => businessService.business)
-  bussinessService: BusinessService
+  businessService: BusinessService
 
   @OneToMany(() => BusinessUser, businessUser => businessUser.business)
   businessUser: BusinessUser

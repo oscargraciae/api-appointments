@@ -22,17 +22,31 @@ export class BookingController {
 
   async getAll(req: MyRequest, res: Response) {
     try {
-      const businessUser = await BusinessUser.findOne({
-        where: { userId: req.session.userId },
-      })
-      if (!businessUser) {
-        return res.json({ success: false });
+      const { status } :any = req.query;
+
+      const where :any = {};
+      where.businessId = req.user.businessUser.businessId;
+      if(status) {
+        where.bookingStatusId = status;
       }
+
       const bookings = await Booking.find({ 
-        where: { businessId: businessUser.businessId },
+        where,
         relations: ['customer']
       });
       return res.json({ success: true, bookings });
+    } catch (error) {
+      return res.json({ success: false, message: error.message });
+    }
+  }
+
+  async update(req: MyRequest, res: Response) {
+    try {
+      const id : number = Number(req.params.id);
+      const body: Booking = req.body;
+      const booking = await Booking.update({ id }, body);
+      
+      return res.json({ success: true, booking });
     } catch (error) {
       return res.json({ success: false, message: error.message });
     }

@@ -18,12 +18,16 @@ import { __prod__ } from '../config/constants';
 
 const setupDB = async () => {
   await createConnection({
+    host: 'reserlydb.czvygimgfy02.us-east-2.rds.amazonaws.com',
     type: 'postgres',
     database: 'boombook_dev',
+    // username: 'postgres',
+    // password: 'desarrollo',
     username: 'postgres',
-    password: 'desarrollo',
+    password: 'NXzPzL38HTT9wOG2Lyea',
     logging: true,
-    synchronize: !__prod__ ? true : false,
+    // synchronize: !__prod__ ? true : false,
+    synchronize: true,
     namingStrategy: new SnakeNamingStrategy(),
     entities: [
       User,

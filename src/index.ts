@@ -24,15 +24,20 @@ const main = () => {
 
   const app = express();
   
-  app.disable('etag');
+
+  // app.disable('etag');
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(cors({
-    origin: ['http://localhost:8002', 'http://localhost:8000'],
-    credentials: true
+    origin: ['http://localhost:8002', 'http://localhost:8000', 'http://localhost', 'http://172.19.0.4', 'http://172.19.0.4:8000'],
+    // origin: "*",
+    credentials: true,
   }));
+  
   app.use(morgan('dev'));
+  
 
+  // const redisClient = redis.createClient({ host: 'redis' });
   const redisClient = redis.createClient();
   app.use(session({
     name: COOKIE_NAME,

@@ -13,13 +13,13 @@ export class BusinessService extends BaseEntity {
   @Column({ nullable: true })
   description: string
 
-  @Column("decimal", { precision: 10, scale: 2 })
+  @Column("decimal", { precision: 10, scale: 0 })
   price: number
 
   @Column()
   time: number // tiempo en minutos, ejemplo: 15, 30, 45 minutos
 
-  @ManyToOne(() => Business, business => business.bussinessService)
+  @ManyToOne(() => Business, business => business.businessService)
   @JoinColumn()
   business: Business
 

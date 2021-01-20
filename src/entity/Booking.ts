@@ -1,6 +1,7 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { BookingStatus } from "./BookingStatus";
 import { Business } from "./Business";
+import { BusinessService } from "./BusinessService";
 import { User } from "./User";
 
 @Entity({ name: 'bookings' })
@@ -9,17 +10,21 @@ export class Booking extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column('date') // Fecha de la reservación, ej: 15/10/2020
+  @Column('timestamp with time zone') // Fecha de la reservación, ej: 15/10/2020
   bookingDate: Date
 
-  @Column('time') // Hora de la reservación, ej: 4:45pm
+  @Column('time with time zone') // Hora de la reservación, ej: 4:45pm
   bookingTime: Date
+
 
   @Column({ nullable: true })
   message: string
 
   @Column({ default: true })
   isActive: boolean
+
+  @Column({ default: 0 })
+  totalTime: number
 
   @ManyToOne(() => User, user => user.bookings)
   @JoinColumn()
@@ -35,10 +40,16 @@ export class Booking extends BaseEntity {
   @Column()
   businessId: number
   
-  @OneToMany(() => BookingStatus, bookingStatus => bookingStatus.bookings)
-  @JoinColumn()
-  bookingStatus: BookingStatus
+  // @OneToMany(() => BookingStatus, bookingStatus => bookingStatus.bookings)
+  // @JoinColumn()
+  // bookingStatus: BookingStatus
 
   @Column()
   bookingStatusId: number
+
+  @CreateDateColumn()
+  createdAt = new Date()
+
+  @UpdateDateColumn()
+  updatedAt = new Date()
 }
