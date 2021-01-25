@@ -13,10 +13,13 @@ export class BookingController {
       const body : any = req.body;
       const bodyServices : BusinessService[] = req.body.businessServices;
       const bodyBooking : Booking = req.body;
-      const booking = await Booking.create({ ...bodyBooking, customerId: req.session.userId, bookingStatusId: 1 }).save();
+      const totalPrice = bodyServices.reduce((total :number, service :any) => total + Number(service.price), 0)
+      console.log('PRECIO TOTAL', totalPrice);
+      
+      const booking = await Booking.create({ ...bodyBooking, customerId: req.session.userId, bookingStatusId: 1, totalPrice: totalPrice }).save();
 
       bodyServices.forEach((item) => {
-        BookingService.create({ businessServiceId: item.id, bookingId: booking.id }).save();
+        BookingService.create({ businessServiceId: item.id, bookingId: booking.id, nameService: item.name, priceService: item.price, timeService: item.time }).save();
       })
       
       return res.json({ success: true, booking });

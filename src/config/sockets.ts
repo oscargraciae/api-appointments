@@ -1,8 +1,11 @@
 import { Server, Socket } from "socket.io";
 import { BusinessService } from "../apiMarket/business/business.service";
+import { MyRequest } from "./types";
 
-const setupSocket = (server: any) => {
+const setupSocket = (server: any, request: MyRequest) => {
   const io = new Server(server);
+
+  request.socketIo = io;
 
   io.on("connection", async (socket : Socket) => {
     console.log('Conectando sockets', socket.id);

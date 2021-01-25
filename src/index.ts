@@ -64,7 +64,7 @@ const main = () => {
     console.log('Listening on port: ', port);
   })
 
-  setupSocket(server);
+  setupSocket(server, app.request);
 }
 
 main();

@@ -1,4 +1,5 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BookingService } from "./BookingService";
 import { BookingStatus } from "./BookingStatus";
 import { Business } from "./Business";
 import { BusinessService } from "./BusinessService";
@@ -26,6 +27,9 @@ export class Booking extends BaseEntity {
   @Column({ default: 0 })
   totalTime: number
 
+  @Column({ default: 0 })
+  totalPrice: number
+
   @ManyToOne(() => User, user => user.bookings)
   @JoinColumn()
   customer: User
@@ -52,4 +56,7 @@ export class Booking extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt = new Date()
+
+  @OneToMany(() => BookingService, bookingService => bookingService.booking)
+  bookingService: BookingService
 }

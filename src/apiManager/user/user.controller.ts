@@ -66,6 +66,12 @@ class UserController {
         relations: ['businessUser', 'businessUser.business']
       });
 
+      console.log('Request data', req.socketIo);
+
+      if (req.socketIo) {
+        req.socketIo.emit('saludo', { message: 'Hola mundo' });
+      }
+
       
       // const user = await getConnection()
       //   .getRepository(BusinessUser)
