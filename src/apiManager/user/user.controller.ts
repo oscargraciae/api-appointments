@@ -66,11 +66,13 @@ class UserController {
         relations: ['businessUser', 'businessUser.business']
       });
 
-      console.log('Request data', req.socketIo);
+      // if (req.app.socketIo) {
+      //   req.app.socketIo.in(user?.businessUser.businessId).emit('saludo', { menssage: 'Nueva notificacion' });
+      // }
 
-      if (req.socketIo) {
-        req.socketIo.emit('saludo', { message: 'Hola mundo' });
-      }
+      // if (req.socketIo) {
+      //   req.socketIo.emit('saludo', { message: 'Hola mundo' });
+      // }
 
       
       // const user = await getConnection()

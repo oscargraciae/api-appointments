@@ -1,3 +1,4 @@
+import http from 'http';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -60,11 +61,20 @@ const main = () => {
   routesMarket(app);
 
   const port = process.env.PORT || 8001;
-  const server = app.listen(port, () =>{
-    console.log('Listening on port: ', port);
-  })
+  
+  const server = http.createServer(app);
 
-  setupSocket(server, app.request);
+  setupSocket(server, app);
+
+  server.listen(port, () => {
+    console.log(`Server listen on port: ${port}`);
+  });
+
+  // const server = app.listen(port, () =>{
+  //   console.log('Listening on port: ', port);
+  // })
+
+  
 }
 
 main();

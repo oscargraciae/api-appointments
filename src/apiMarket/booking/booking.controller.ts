@@ -21,6 +21,12 @@ export class BookingController {
       bodyServices.forEach((item) => {
         BookingService.create({ businessServiceId: item.id, bookingId: booking.id, nameService: item.name, priceService: item.price, timeService: item.time }).save();
       })
+
+      if (req.app.socketIo && bodyBooking.businessId) {
+        console.log('Emitiendo una reservacion', bodyBooking.businessId);
+        
+        req.app.socketIo.in(bodyBooking.businessId).emit('new-booking', { booking });
+      }
       
       return res.json({ success: true, booking });
     } catch (error) {
