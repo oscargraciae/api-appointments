@@ -12,11 +12,9 @@ const setupSocket = (server: any, app: any) => {
     app.socket = socket;
     // socket.emit('listado', await new BusinessService().getAll());
 
-    socket.on('hola', async (coords) => {
-      console.log('Coordenadas de busqueda', coords);
-      // return await new BusinessService().getAll(coords)
-      socket.emit('listado', await new BusinessService().getAll(coords));
-    })
+    // socket.on('hola', async (coords) => {
+    //   socket.emit('listado', await new BusinessService().getAll(coords));
+    // })
 
     // socket.emit('saludo', { message: 'Hola mundo 1234' });
 

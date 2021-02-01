@@ -1,18 +1,28 @@
 import { Response } from "express";
+import { getConnection } from "typeorm";
 
 import { Business } from "../../entity/Business";
+import { BusinessFile } from "../../entity/BusinessFile";
 
 import { MyRequest } from "../../config/types";
-import { getConnection } from "typeorm";
+import { BusinessService } from "./business.service";
 
 class BusinessController {
 
-  async getBusiness(_: MyRequest, res: Response) {
+  async getBusiness(req: MyRequest, res: Response) {
     try {
-      const business = await Business.find({
-        where: { isActive: true },
-        relations: ['businessAddress']
-      });
+      let { lat, lng, categoryId } : any = req.query;
+      
+      if (!lat && lng) {
+        lat = 25.6866142;
+        lng = -100.3161126;
+      }
+      
+      const business = await new BusinessService().getAll({ lat, lng }, categoryId);
+      // const business = await Business.find({
+      //   where: { isActive: true },
+      //   relations: ['businessAddress']
+      // });
       return res.json({
         success: true,
         business,
@@ -44,6 +54,16 @@ class BusinessController {
         business,
         mensaje: 'Hola prueba cambio de docker r'
       })
+    } catch (error) {
+      return res.json({ success: false, message: error.message });
+    }
+  }
+
+  async getPhotos(req: MyRequest, res: Response) {
+    try {
+      const businessId : number = Number(req.params.id);
+      const photos = await BusinessFile.find({ where: { businessId } })
+      return res.json({ success: true, photos });
     } catch (error) {
       return res.json({ success: false, message: error.message });
     }

@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm";
+import { Business } from "./Business";
 
 @Entity({ name: 'business_files' })
 export class BusinessFile extends BaseEntity {
@@ -14,4 +15,12 @@ export class BusinessFile extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt = new Date()
+
+  @ManyToOne(() => Business, business => business.files)
+  @JoinColumn()
+  business: Business
+
+
+  @Column()
+  businessId: number
 }
