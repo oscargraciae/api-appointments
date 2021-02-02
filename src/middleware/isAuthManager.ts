@@ -18,11 +18,11 @@ export const isAuth = async (req: MyRequest, res: Response, next: NextFunction) 
       return res.status(401).json({ success: false, message: 'User not found.' });
     }
     
-    if (user.businessUser) {
-      if (req.app.socket) {
-        req.app.socket.join(user.businessUser.businessId);
-      }
-    }
+    // if (user.businessUser) {
+    //   if (req.app.socket) {
+    //     req.app.socket.join(user.businessUser.businessId);
+    //   }
+    // }
 
     req.user = user;
   

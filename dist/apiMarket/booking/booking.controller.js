@@ -16,7 +16,6 @@ class BookingController {
     create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const body = req.body;
                 const bodyServices = req.body.businessServices;
                 const bodyBooking = req.body;
                 const totalPrice = bodyServices.reduce((total, service) => total + Number(service.price), 0);
@@ -25,10 +24,6 @@ class BookingController {
                 bodyServices.forEach((item) => {
                     BookingService_1.BookingService.create({ businessServiceId: item.id, bookingId: booking.id, nameService: item.name, priceService: item.price, timeService: item.time }).save();
                 });
-                if (req.app.socketIo && bodyBooking.businessId) {
-                    console.log('Emitiendo una reservacion', bodyBooking.businessId);
-                    req.app.socketIo.in(bodyBooking.businessId).emit('new-booking', { booking });
-                }
                 return res.json({ success: true, booking });
             }
             catch (error) {

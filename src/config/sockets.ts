@@ -1,6 +1,4 @@
 import { Server, Socket } from "socket.io";
-import { BusinessService } from "../apiMarket/business/business.service";
-import { MyRequest } from "./types";
 
 const setupSocket = (server: any, app: any) => {
   const io = new Server(server);

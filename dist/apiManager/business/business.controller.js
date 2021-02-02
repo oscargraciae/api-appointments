@@ -125,7 +125,7 @@ class BusinessController {
                 const business = yield Business_1.Business.findOne({ where: { id: req.user.businessUser.businessId } });
                 if (business && business.cover) {
                     const imgName = business.cover.split('/')[4];
-                    const resp = yield s3.deleteObject({
+                    yield s3.deleteObject({
                         Bucket: 'reserly-dev',
                         Key: `${req.user.businessUser.businessId}/${imgName}`
                     }).promise();
@@ -154,7 +154,7 @@ class BusinessController {
                 console.log('Fotos', req.files);
                 console.log('Fotos', req.files);
                 if (req.files.length > 0) {
-                    req.files.map((file) => __awaiter(this, void 0, void 0, function* () {
+                    Array(req.files).map((file) => __awaiter(this, void 0, void 0, function* () {
                         const miniBuffer = yield imagemin_1.default.buffer(file.buffer, {
                             plugins: [convertToJpg, imagemin_mozjpeg_1.default({ quality: 80 })]
                         });
@@ -197,7 +197,7 @@ class BusinessController {
                     console.log('Eliminando');
                     const imgName = businessFile.file.split('/')[4];
                     console.log('Eliminando', imgName);
-                    const resp = yield s3.deleteObject({
+                    yield s3.deleteObject({
                         Bucket: 'reserly-dev',
                         Key: `${req.user.businessUser.businessId}/${imgName}`
                     }).promise();

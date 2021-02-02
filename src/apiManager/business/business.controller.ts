@@ -134,7 +134,7 @@ class BusinessController {
 
       if (business && business.cover) {
         const imgName = business.cover.split('/')[4];
-        const resp = await s3.deleteObject({
+        await s3.deleteObject({
           Bucket: 'reserly-dev',
           Key: `${req.user.businessUser.businessId}/${imgName}`
         }).promise();
@@ -167,7 +167,7 @@ class BusinessController {
       console.log('Fotos', req.files);
       
       if (req.files.length > 0) {
-        req.files.map(async (file :any) => {
+        Array(req.files).map(async (file :any) => {
           const miniBuffer = await imagemin.buffer(file.buffer, {
             plugins: [convertToJpg, mozjpeg({ quality: 80 })]
           });
@@ -215,7 +215,7 @@ class BusinessController {
         const imgName = businessFile.file.split('/')[4];
         console.log('Eliminando',imgName);
         
-        const resp = await s3.deleteObject({
+        await s3.deleteObject({
           Bucket: 'reserly-dev',
           Key: `${req.user.businessUser.businessId}/${imgName}`
         }).promise();

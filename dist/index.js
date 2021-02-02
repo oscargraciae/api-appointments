@@ -22,7 +22,7 @@ const main = () => {
     app.use(body_parser_1.default.json());
     app.use(body_parser_1.default.urlencoded({ extended: true }));
     app.use(cors_1.default({
-        origin: ['http://localhost:8002', 'http://localhost:8000', 'http://localhost', 'http://172.19.0.4', 'http://172.19.0.4:8000'],
+        origin: ['http://localhost:8002', 'http://localhost:8000', 'http://localhost', 'http://172.19.0.4', 'http://172.19.0.4:8000', 'http://3.135.239.2', 'http://3.135.239.2:8000'],
         credentials: true,
     }));
     app.use(morgan_1.default('dev'));

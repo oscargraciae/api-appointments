@@ -4,7 +4,7 @@ import { BusinessCategory } from "../../entity/BusinessCategory";
 import { MyRequest } from "../../config/types";
 
 export class CategoryController {
-  async getAll(req: MyRequest, res: Response) {
+  async getAll(_req: MyRequest, res: Response) {
     try {
       const categories = await BusinessCategory.find();
       return res.json({

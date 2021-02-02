@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoryController = void 0;
 const BusinessCategory_1 = require("../../entity/BusinessCategory");
 class CategoryController {
-    getAll(req, res) {
+    getAll(_req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const categories = yield BusinessCategory_1.BusinessCategory.find();

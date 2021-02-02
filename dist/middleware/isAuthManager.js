@@ -23,11 +23,6 @@ const isAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
         if (!user) {
             return res.status(401).json({ success: false, message: 'User not found.' });
         }
-        if (user.businessUser) {
-            if (req.app.socket) {
-                req.app.socket.join(user.businessUser.businessId);
-            }
-        }
         req.user = user;
         return next();
     }

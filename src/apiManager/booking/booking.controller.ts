@@ -3,7 +3,6 @@ import { Response } from 'express'
 import { MyRequest } from "../../config/types";
 
 // ENTITIES
-import { BusinessUser } from '../../entity/BusinessUser';
 import { Booking } from '../../entity/Booking';
 import { In, LessThan, MoreThanOrEqual } from 'typeorm';
 

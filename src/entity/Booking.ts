@@ -1,8 +1,6 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { BookingService } from "./BookingService";
-import { BookingStatus } from "./BookingStatus";
 import { Business } from "./Business";
-import { BusinessService } from "./BusinessService";
 import { User } from "./User";
 
 @Entity({ name: 'bookings' })
