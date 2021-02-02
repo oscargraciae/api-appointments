@@ -30,7 +30,7 @@ const main = () => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(cors({
-    origin: ['http://localhost:8002', 'http://localhost:8000', 'http://localhost', 'http://172.19.0.4', 'http://172.19.0.4:8000', 'http://3.135.239.2', 'http://3.135.239.2:8000'],
+    origin: ['http://localhost:8002', 'http://localhost:8000', 'http://localhost', 'http://18.223.218.233', 'http://reserly.mx', 'https://reserly.mx'],
     // origin: "*",
     credentials: true,
   }));
