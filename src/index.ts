@@ -44,18 +44,18 @@ const main = () => {
   app.use(session({
     // proxy: true, // NODE_ENV === 'production'
     name: COOKIE_NAME,
-    secret: 'secretkey',
+    secret: 'secretkey2',
     store: new RedisStore({ 
       client: redisClient,
       disableTouch: true,
     }),
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
-      httpOnly: false, // No afecta
-      sameSite: "lax", // csrf
-      secure: false, // cookie only works in https. -> En true mo me almaneca la sesion
+      // httpOnly: false, // No afecta
+      // sameSite: "lax", // csrf
+      // secure: false, // cookie only works in https. -> En true mo me almaneca la sesion
     },
-    saveUninitialized: false,
+    saveUninitialized: true,
     resave: true,
   }))
 

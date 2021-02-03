@@ -30,18 +30,15 @@ const main = () => {
     const redisClient = redis_1.default.createClient();
     app.use(express_session_1.default({
         name: constants_1.COOKIE_NAME,
-        secret: 'secretkey',
+        secret: 'secretkey2',
         store: new RedisStore({
             client: redisClient,
             disableTouch: true,
         }),
         cookie: {
             maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
-            httpOnly: false,
-            sameSite: "lax",
-            secure: false,
         },
-        saveUninitialized: false,
+        saveUninitialized: true,
         resave: true,
     }));
     routesManager_1.default(app);
