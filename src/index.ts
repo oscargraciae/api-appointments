@@ -8,7 +8,7 @@ import morgan from 'morgan';
 
 import setupDB from './database';
 import routesManager from './config/routesManager';
-import { COOKIE_NAME } from './config/constants';
+import { COOKIE_NAME, __prod__ } from './config/constants';
 import routesMarket from './config/routesMarket';
 import setupSocket from './config/sockets';
 
@@ -41,6 +41,7 @@ const main = () => {
   // const redisClient = redis.createClient({ host: 'redis' });
   const redisClient = redis.createClient();
   app.use(session({
+    proxy: !__prod__ ? true : false,
     name: COOKIE_NAME,
     secret: 'secretkey',
     store: new RedisStore({ 
@@ -49,7 +50,7 @@ const main = () => {
     }),
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
-      httpOnly: false,
+      httpOnly: !__prod__ ? true : false,
       sameSite: 'lax',
       secure: false, // only works https,
     },

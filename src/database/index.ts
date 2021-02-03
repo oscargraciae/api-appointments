@@ -26,8 +26,8 @@ const setupDB = async () => {
     username: 'postgres',
     password: 'NXzPzL38HTT9wOG2Lyea',
     logging: true,
-    // synchronize: !__prod__ ? true : false,
-    synchronize: true,
+    synchronize: !__prod__ ? true : false,
+    // synchronize: true,
     namingStrategy: new SnakeNamingStrategy(),
     entities: [
       User,

@@ -23,6 +23,7 @@ const BookingStatus_1 = require("../entity/BookingStatus");
 const BookingService_1 = require("../entity/BookingService");
 const Review_1 = require("../entity/Review");
 const BusinessHour_1 = require("../entity/BusinessHour");
+const constants_1 = require("../config/constants");
 const setupDB = () => __awaiter(void 0, void 0, void 0, function* () {
     yield typeorm_1.createConnection({
         host: 'reserlydb.czvygimgfy02.us-east-2.rds.amazonaws.com',
@@ -31,7 +32,7 @@ const setupDB = () => __awaiter(void 0, void 0, void 0, function* () {
         username: 'postgres',
         password: 'NXzPzL38HTT9wOG2Lyea',
         logging: true,
-        synchronize: true,
+        synchronize: !constants_1.__prod__ ? true : false,
         namingStrategy: new typeorm_naming_strategies_1.SnakeNamingStrategy(),
         entities: [
             User_1.User,
