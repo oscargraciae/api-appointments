@@ -44,7 +44,7 @@ const main = () => {
   console.log('!__prod__', !__prod__);
   
   app.use(session({
-    proxy: !__prod__ ? true : false,
+    // proxy: !__prod__ ? true : false,
     name: COOKIE_NAME,
     secret: 'secretkey',
     store: new RedisStore({ 
@@ -55,7 +55,7 @@ const main = () => {
       maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
       httpOnly: true,
       sameSite: 'lax',
-      secure: !__prod__ ? true : false, // only works https,
+      secure: __prod__, // only works https,
       domain: __prod__ ? ".reserly.mx" : undefined,
     },
     saveUninitialized: false,

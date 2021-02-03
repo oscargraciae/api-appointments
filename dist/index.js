@@ -41,7 +41,7 @@ const main = () => {
             maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
             httpOnly: true,
             sameSite: 'lax',
-            secure: !constants_1.__prod__ ? true : false,
+            secure: constants_1.__prod__,
             domain: constants_1.__prod__ ? ".reserly.mx" : undefined,
         },
         saveUninitialized: false,
