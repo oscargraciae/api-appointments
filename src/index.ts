@@ -1,3 +1,4 @@
+
 import http from 'http';
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -14,16 +15,16 @@ import setupSocket from './config/sockets';
 
 const RedisStore = require('connect-redis')(session);
 
-// declare namespace Express {
-//   export interface Request {
-//     customProperty?: string
-//   }
-// }
+require('dotenv-flow').config();
 
 const main = () => {
   setupDB();
 
   const app = express();
+  
+  console.log('AWS_ACCESS_KEY_ID', process.env.AWS_ACCESS_KEY_ID);
+  console.log('AWS_ACCESS_KEY_ID', process.env.DATABASE_USER);
+  console.log('AWS_ACCESS_KEY_ID', process.env.DATABASE_HOST);
   
 
   // app.disable('etag');
@@ -31,8 +32,7 @@ const main = () => {
   app.use(bodyParser.urlencoded({ extended: true }));
   
   app.use(cors({
-    origin: ['http://localhost:8002', 'http://localhost:8000', 'http://localhost', 'https://reserly.mx',],
-    // origin: "*",
+    origin: ['http://localhost:8002', 'http://localhost:8000', 'https://reserly.mx',],
     credentials: true,
   }));
   

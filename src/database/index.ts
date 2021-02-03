@@ -18,16 +18,13 @@ import { __prod__ } from '../config/constants';
 
 const setupDB = async () => {
   await createConnection({
-    host: 'reserlydb.czvygimgfy02.us-east-2.rds.amazonaws.com',
+    host: process.env.DATABASE_HOST,
     type: 'postgres',
-    database: 'boombook_dev',
-    // username: 'postgres',
-    // password: 'desarrollo',
-    username: 'postgres',
-    password: 'NXzPzL38HTT9wOG2Lyea',
+    database: process.env.DATABASE_NAME,
+    username: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
     logging: true,
     synchronize: !__prod__ ? true : false,
-    // synchronize: true,
     namingStrategy: new SnakeNamingStrategy(),
     entities: [
       User,
@@ -44,9 +41,7 @@ const setupDB = async () => {
       BusinessHour,
     ],
   });
-
   // conn.runMigrations();
-
 }
 
 export default setupDB;

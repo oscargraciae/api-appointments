@@ -16,13 +16,17 @@ const constants_1 = require("./config/constants");
 const routesMarket_1 = __importDefault(require("./config/routesMarket"));
 const sockets_1 = __importDefault(require("./config/sockets"));
 const RedisStore = require('connect-redis')(express_session_1.default);
+require('dotenv-flow').config();
 const main = () => {
     database_1.default();
     const app = express_1.default();
+    console.log('AWS_ACCESS_KEY_ID', process.env.AWS_ACCESS_KEY_ID);
+    console.log('AWS_ACCESS_KEY_ID', process.env.DATABASE_USER);
+    console.log('AWS_ACCESS_KEY_ID', process.env.DATABASE_HOST);
     app.use(body_parser_1.default.json());
     app.use(body_parser_1.default.urlencoded({ extended: true }));
     app.use(cors_1.default({
-        origin: ['http://localhost:8002', 'http://localhost:8000', 'http://localhost', 'https://reserly.mx',],
+        origin: ['http://localhost:8002', 'http://localhost:8000', 'https://reserly.mx',],
         credentials: true,
     }));
     app.use(morgan_1.default('dev'));

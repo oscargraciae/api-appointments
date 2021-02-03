@@ -55,7 +55,7 @@ class UserController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 return req.session.destroy(err => {
-                    res.clearCookie(constants_1.COOKIE_NAME);
+                    res.clearCookie(constants_1.COOKIE_NAME, { domain: 'reserly.mx' });
                     if (err) {
                         res.status(400).send('Unable to log out');
                     }

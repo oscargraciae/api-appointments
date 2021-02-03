@@ -26,11 +26,11 @@ const BusinessHour_1 = require("../entity/BusinessHour");
 const constants_1 = require("../config/constants");
 const setupDB = () => __awaiter(void 0, void 0, void 0, function* () {
     yield typeorm_1.createConnection({
-        host: 'reserlydb.czvygimgfy02.us-east-2.rds.amazonaws.com',
+        host: process.env.DATABASE_HOST,
         type: 'postgres',
-        database: 'boombook_dev',
-        username: 'postgres',
-        password: 'NXzPzL38HTT9wOG2Lyea',
+        database: process.env.DATABASE_NAME,
+        username: process.env.DATABASE_USER,
+        password: process.env.DATABASE_PASSWORD,
         logging: true,
         synchronize: !constants_1.__prod__ ? true : false,
         namingStrategy: new typeorm_naming_strategies_1.SnakeNamingStrategy(),

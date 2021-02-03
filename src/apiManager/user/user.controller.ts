@@ -46,7 +46,7 @@ class UserController {
   async logout(req: MyRequest, res: Response) {
     try {
       return req.session.destroy(err => {
-        res.clearCookie(COOKIE_NAME);
+        res.clearCookie(COOKIE_NAME, { domain: 'reserly.mx' });
         if (err) {
           res.status(400).send('Unable to log out')
         } else {
