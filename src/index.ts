@@ -42,6 +42,7 @@ const main = () => {
   // const redisClient = redis.createClient({ host: 'redis' });
   const redisClient = redis.createClient();
   app.use(session({
+    proxy: true, // NODE_ENV === 'production'
     name: COOKIE_NAME,
     secret: 'secretkey',
     store: new RedisStore({ 
@@ -50,7 +51,7 @@ const main = () => {
     }),
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
-      httpOnly: true,
+      // httpOnly: true,
       sameSite: "lax", // csrf
       secure: __prod__, // cookie only works in https
     },
