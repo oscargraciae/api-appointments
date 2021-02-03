@@ -51,9 +51,9 @@ const main = () => {
     }),
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
-      httpOnly: true,
+      httpOnly: false,
       sameSite: "lax", // csrf
-      secure: false, // cookie only works in https
+      secure: false, // cookie only works in https. -> En true mo me almaneca la sesion
     },
     saveUninitialized: false,
     resave: true,
