@@ -56,7 +56,7 @@ const main = () => {
       httpOnly: false,
       sameSite: 'lax',
       secure: __prod__, // only works https,
-      domain: __prod__ ? ".reserly.mx" : undefined,
+      // domain: __prod__ ? ".reserly.mx" : undefined,
     },
     saveUninitialized: false,
     resave: false,

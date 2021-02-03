@@ -40,7 +40,6 @@ const main = () => {
             httpOnly: false,
             sameSite: 'lax',
             secure: constants_1.__prod__,
-            domain: constants_1.__prod__ ? ".reserly.mx" : undefined,
         },
         saveUninitialized: false,
         resave: false,
