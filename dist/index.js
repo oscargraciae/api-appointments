@@ -22,7 +22,7 @@ const main = () => {
     app.use(body_parser_1.default.json());
     app.use(body_parser_1.default.urlencoded({ extended: true }));
     app.use(cors_1.default({
-        origin: ['http://localhost:8002', 'http://localhost:8000', 'http://localhost', 'http://18.223.218.233', 'http://reserly.mx', 'https://reserly.mx'],
+        origin: ['http://localhost:8002', 'http://localhost:8000', 'http://localhost', 'https://reserly.mx',],
         credentials: true,
     }));
     app.use(morgan_1.default('dev'));
