@@ -37,9 +37,12 @@ const main = () => {
         }),
         cookie: {
             maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
-            httpOnly: false,
-            secure: false,
+            httpOnly: true,
+            sameSite: "lax",
+            secure: constants_1.__prod__,
         },
+        saveUninitialized: false,
+        resave: false,
     }));
     routesManager_1.default(app);
     routesMarket_1.default(app);
