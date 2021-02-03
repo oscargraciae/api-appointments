@@ -38,7 +38,7 @@ const main = () => {
             maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
             httpOnly: false,
             sameSite: 'lax',
-            secure: true,
+            secure: false,
         },
         saveUninitialized: false,
         resave: false,

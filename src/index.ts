@@ -51,7 +51,7 @@ const main = () => {
       maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
       httpOnly: false,
       sameSite: 'lax',
-      secure: true, // only works https,
+      secure: false, // only works https,
     },
     saveUninitialized: false,
     resave: false,
