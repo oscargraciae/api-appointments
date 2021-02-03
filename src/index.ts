@@ -44,7 +44,7 @@ const main = () => {
   app.use(session({
     // proxy: true, // NODE_ENV === 'production'
     name: COOKIE_NAME,
-    secret: 'secretkey2',
+    secret: 'secretkey',
     store: new RedisStore({ 
       client: redisClient,
       disableTouch: true,
