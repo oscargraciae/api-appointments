@@ -37,6 +37,9 @@ const main = () => {
         }),
         cookie: {
             maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
+            httpOnly: true,
+            secure: true,
+            domain: 'reserly.mx'
         },
         saveUninitialized: true,
         resave: true,

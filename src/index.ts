@@ -51,6 +51,9 @@ const main = () => {
     }),
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
+      httpOnly: true,
+      secure: true,
+      domain: 'reserly.mx'
       // httpOnly: false, // No afecta
       // sameSite: "lax", // csrf
       // secure: false, // cookie only works in https. -> En true mo me almaneca la sesion
