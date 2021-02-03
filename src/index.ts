@@ -29,6 +29,7 @@ const main = () => {
   // app.disable('etag');
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
+  app.set("trust proxy", 1);
   app.use(cors({
     origin: ['http://localhost:8002', 'http://localhost:8000', 'http://localhost', 'https://reserly.mx',],
     // origin: "*",

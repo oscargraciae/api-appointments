@@ -21,6 +21,7 @@ const main = () => {
     const app = express_1.default();
     app.use(body_parser_1.default.json());
     app.use(body_parser_1.default.urlencoded({ extended: true }));
+    app.set("trust proxy", 1);
     app.use(cors_1.default({
         origin: ['http://localhost:8002', 'http://localhost:8000', 'http://localhost', 'https://reserly.mx',],
         credentials: true,
