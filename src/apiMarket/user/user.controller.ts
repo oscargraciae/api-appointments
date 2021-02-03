@@ -32,7 +32,7 @@ class UserController {
       
       req.session!.userId = user.id;
       
-      return res.json({ success: true });
+      return res.json({ success: true, user });
     } catch (error) {
       return res.json({
         success: false,
