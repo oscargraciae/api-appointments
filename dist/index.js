@@ -41,8 +41,8 @@ const main = () => {
             secure: true,
             domain: 'reserly.mx'
         },
-        saveUninitialized: true,
-        resave: true,
+        saveUninitialized: false,
+        resave: false,
     }));
     routesManager_1.default(app);
     routesMarket_1.default(app);

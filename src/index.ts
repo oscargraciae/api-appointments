@@ -58,8 +58,8 @@ const main = () => {
       // sameSite: "lax", // csrf
       // secure: false, // cookie only works in https. -> En true mo me almaneca la sesion
     },
-    saveUninitialized: true,
-    resave: true,
+    saveUninitialized: false,
+    resave: false,
   }))
 
   routesManager(app);
