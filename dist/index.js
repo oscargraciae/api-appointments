@@ -30,7 +30,6 @@ const main = () => {
     const redisClient = redis_1.default.createClient();
     console.log('!__prod__', !constants_1.__prod__);
     app.use(express_session_1.default({
-        proxy: !constants_1.__prod__ ? true : false,
         name: constants_1.COOKIE_NAME,
         secret: 'secretkey',
         store: new RedisStore({
@@ -39,7 +38,7 @@ const main = () => {
         }),
         cookie: {
             maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
-            httpOnly: true,
+            httpOnly: false,
             sameSite: 'lax',
             secure: constants_1.__prod__,
             domain: constants_1.__prod__ ? ".reserly.mx" : undefined,

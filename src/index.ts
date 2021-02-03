@@ -53,7 +53,7 @@ const main = () => {
     }),
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
-      httpOnly: true,
+      httpOnly: false,
       sameSite: 'lax',
       secure: __prod__, // only works https,
       domain: __prod__ ? ".reserly.mx" : undefined,
