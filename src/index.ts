@@ -29,7 +29,7 @@ const main = () => {
   // app.disable('etag');
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
-  // app.set("trust proxy", 1);
+  app.set("trust proxy", 1);
   app.use(cors({
     origin: ['http://localhost:8002', 'http://localhost:8000', 'http://localhost', 'https://reserly.mx',],
     credentials: true,
@@ -44,7 +44,7 @@ const main = () => {
   console.log('!__prod__', !__prod__);
   
   app.use(session({
-    // proxy: !__prod__ ? true : false,
+    proxy: true,
     name: COOKIE_NAME,
     secret: 'secretkey',
     store: new RedisStore({ 
