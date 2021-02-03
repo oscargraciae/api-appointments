@@ -29,6 +29,7 @@ const main = () => {
     app.use(morgan_1.default('dev'));
     const redisClient = redis_1.default.createClient();
     app.use(express_session_1.default({
+        proxy: true,
         name: constants_1.COOKIE_NAME,
         secret: 'secretkey',
         store: new RedisStore({
@@ -37,7 +38,6 @@ const main = () => {
         }),
         cookie: {
             maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
-            httpOnly: true,
             sameSite: "lax",
             secure: constants_1.__prod__,
         },
