@@ -29,7 +29,6 @@ const main = () => {
     app.set("trust proxy", 1);
     const redisClient = redis_1.default.createClient();
     app.use(express_session_1.default({
-        proxy: true,
         name: constants_1.COOKIE_NAME,
         secret: 'secretkey',
         store: new RedisStore({

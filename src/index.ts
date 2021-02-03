@@ -42,7 +42,7 @@ const main = () => {
   // const redisClient = redis.createClient({ host: 'redis' });
   const redisClient = redis.createClient();
   app.use(session({
-    proxy: true, // NODE_ENV === 'production'
+    // proxy: true, // NODE_ENV === 'production'
     name: COOKIE_NAME,
     secret: 'secretkey',
     store: new RedisStore({ 
@@ -51,7 +51,7 @@ const main = () => {
     }),
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
-      httpOnly: false,
+      httpOnly: false, // No afecta
       sameSite: "lax", // csrf
       secure: false, // cookie only works in https. -> En true mo me almaneca la sesion
     },
