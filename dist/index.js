@@ -21,12 +21,12 @@ const main = () => {
     const app = express_1.default();
     app.use(body_parser_1.default.json());
     app.use(body_parser_1.default.urlencoded({ extended: true }));
-    app.set("trust proxy", 1);
     app.use(cors_1.default({
         origin: ['http://localhost:8002', 'http://localhost:8000', 'http://localhost', 'https://reserly.mx',],
         credentials: true,
     }));
     app.use(morgan_1.default('dev'));
+    app.set("trust proxy", 1);
     const redisClient = redis_1.default.createClient();
     app.use(express_session_1.default({
         proxy: true,
@@ -38,11 +38,12 @@ const main = () => {
         }),
         cookie: {
             maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
+            httpOnly: true,
             sameSite: "lax",
             secure: constants_1.__prod__,
         },
         saveUninitialized: false,
-        resave: false,
+        resave: true,
     }));
     routesManager_1.default(app);
     routesMarket_1.default(app);

@@ -29,7 +29,7 @@ const main = () => {
   // app.disable('etag');
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
-  app.set("trust proxy", 1);
+  
   app.use(cors({
     origin: ['http://localhost:8002', 'http://localhost:8000', 'http://localhost', 'https://reserly.mx',],
     // origin: "*",
@@ -38,7 +38,7 @@ const main = () => {
   
   app.use(morgan('dev'));
   
-
+  app.set("trust proxy", 1);
   // const redisClient = redis.createClient({ host: 'redis' });
   const redisClient = redis.createClient();
   app.use(session({
@@ -51,12 +51,12 @@ const main = () => {
     }),
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
-      // httpOnly: true,
+      httpOnly: true,
       sameSite: "lax", // csrf
       secure: __prod__, // cookie only works in https
     },
     saveUninitialized: false,
-    resave: false,
+    resave: true,
   }))
 
   routesManager(app);
