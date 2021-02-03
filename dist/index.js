@@ -27,7 +27,6 @@ const main = () => {
     }));
     app.use(morgan_1.default('dev'));
     const redisClient = redis_1.default.createClient();
-    console.log('!__prod__', !constants_1.__prod__);
     app.use(express_session_1.default({
         name: constants_1.COOKIE_NAME,
         secret: 'secretkey',
@@ -39,7 +38,7 @@ const main = () => {
             maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
             httpOnly: false,
             sameSite: 'lax',
-            secure: constants_1.__prod__,
+            secure: false,
         },
         saveUninitialized: false,
         resave: false,

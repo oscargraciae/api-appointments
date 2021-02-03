@@ -8,7 +8,7 @@ import morgan from 'morgan';
 
 import setupDB from './database';
 import routesManager from './config/routesManager';
-import { COOKIE_NAME, __prod__ } from './config/constants';
+import { COOKIE_NAME } from './config/constants';
 import routesMarket from './config/routesMarket';
 import setupSocket from './config/sockets';
 
@@ -29,9 +29,9 @@ const main = () => {
   // app.disable('etag');
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
-  // app.set("trust proxy", 1);
   app.use(cors({
     origin: ['http://localhost:8002', 'http://localhost:8000', 'http://localhost', 'https://reserly.mx',],
+    // origin: "*",
     credentials: true,
   }));
   
@@ -40,11 +40,7 @@ const main = () => {
 
   // const redisClient = redis.createClient({ host: 'redis' });
   const redisClient = redis.createClient();
-  
-  console.log('!__prod__', !__prod__);
-  
   app.use(session({
-    // proxy: !__prod__ ? true : false,z
     name: COOKIE_NAME,
     secret: 'secretkey',
     store: new RedisStore({ 
@@ -55,8 +51,7 @@ const main = () => {
       maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
       httpOnly: false,
       sameSite: 'lax',
-      secure: __prod__, // only works https,
-      // domain: __prod__ ? ".reserly.mx" : undefined,
+      secure: false, // only works https,
     },
     saveUninitialized: false,
     resave: false,
