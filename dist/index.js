@@ -36,9 +36,9 @@ const main = () => {
         }),
         cookie: {
             maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
-            httpOnly: true,
+            httpOnly: false,
             sameSite: 'lax',
-            secure: false,
+            secure: true,
         },
         saveUninitialized: false,
         resave: false,
