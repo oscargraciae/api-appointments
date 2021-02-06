@@ -18,7 +18,7 @@ class BookingController {
     getAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { status, statuses, endDate, startDate } = req.query;
+                const { endDate, startDate } = req.query;
                 let where = {};
                 if (endDate) {
                     where.bookingDate = typeorm_1.MoreThanOrEqual(endDate);

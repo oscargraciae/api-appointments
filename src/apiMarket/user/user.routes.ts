@@ -10,5 +10,7 @@ router.post('/', user.create);
 
 router.get('/auth/logout', isAuth, user.logout);
 router.post('/auth', user.login);
+router.post('/forgot-password', user.forgotPassword);
+router.post('/change-password', user.changePassword);
 
 export default router;

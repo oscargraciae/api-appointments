@@ -7,7 +7,7 @@ const http_1 = __importDefault(require("http"));
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
-const redis_1 = __importDefault(require("redis"));
+const ioredis_1 = __importDefault(require("ioredis"));
 const express_session_1 = __importDefault(require("express-session"));
 const morgan_1 = __importDefault(require("morgan"));
 const mail_1 = __importDefault(require("@sendgrid/mail"));
@@ -34,12 +34,12 @@ const main = () => {
     }));
     app.use(morgan_1.default('dev'));
     app.set("trust proxy", 1);
-    const redisClient = redis_1.default.createClient();
+    const redis = new ioredis_1.default();
     app.use(express_session_1.default({
         name: constants_1.COOKIE_NAME,
         secret: 'secretkey',
         store: new RedisStore({
-            client: redisClient,
+            client: redis,
             disableTouch: true,
         }),
         cookie: {

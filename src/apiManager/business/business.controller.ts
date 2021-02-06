@@ -14,7 +14,7 @@ import { BusinessFile } from "../../entity/BusinessFile";
 import { User } from "../../entity/User";
 
 import { MyRequest } from "../../config/types";
-import { addContact, addContactBusiness, sendMailWelcomeStore } from "../../mails/mails";
+import { addContactBusiness, sendMailWelcomeStore } from "../../mails/mails";
 
 const s3 = new S3({ region: 'us-east-2', credentials: { accessKeyId: 'AKIAX64L7XCVTA7JXFEM', secretAccessKey: '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' } });
 

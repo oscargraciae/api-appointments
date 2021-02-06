@@ -1,5 +1,5 @@
 import sgMail, { MailDataRequired } from '@sendgrid/mail';
-import sgClient, { Client } from '@sendgrid/client';
+import sgClient from '@sendgrid/client';
 import { formatDateLG, formatDate } from '../utils/formatDate';
 
 
@@ -83,6 +83,24 @@ export const sendMailReservation = (booking: Booking) => {
   })
 }
 
+export const sendMailChangePassword = (user: User, token: string) => {
+  const msg : MailDataRequired = { 
+    from: 'Reserly <hola@reserly.mx>',
+    to: user.email,
+    templateId: 'd-7146674ba15c432196fceaadd2ef990d',
+    dynamicTemplateData: {
+      name: `${user.firstName}`,
+      url: `https://reserly.mx/change-password/${token}`
+    }
+  }
+
+  sgMail.send(msg).then(() => {
+    console.log('Email sent to', user.email)
+  }).catch((error) => {
+    console.log('Email ERROR', error.message)
+    console.error(error)
+  })
+}
 
 export const addContact = (user: User) => {
   const request : any = {

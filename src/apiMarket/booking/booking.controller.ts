@@ -1,6 +1,5 @@
 import { Response } from "express";
-import { In, LessThan, MoreThanOrEqual } from 'typeorm';
-import sgMail, { MailDataRequired } from '@sendgrid/mail';
+import { LessThan, MoreThanOrEqual } from 'typeorm';
 
 import { BookingService } from "../../entity/BookingService";
 import { BusinessService } from "../../entity/BusinessService";
@@ -13,7 +12,7 @@ export class BookingController {
   
   async getAll(req: MyRequest, res: Response) {
     try {
-      const { status, statuses, endDate, startDate } :any = req.query;
+      const { endDate, startDate } :any = req.query;
       let where : any = {};
       
       if (endDate) {

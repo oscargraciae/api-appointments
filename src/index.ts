@@ -3,7 +3,8 @@ import http from 'http';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import redis from 'redis';
+// import redis from 'ioredis';
+import Redis from "ioredis";
 import session from 'express-session';
 import morgan from 'morgan';
 import sgMail from '@sendgrid/mail';
@@ -42,13 +43,14 @@ const main = () => {
   
   app.set("trust proxy", 1);
   // const redisClient = redis.createClient({ host: 'redis' });
-  const redisClient = redis.createClient();
+  // const redisClient = redis.createClient();
+  const redis = new Redis();
   app.use(session({
     // proxy: true, // NODE_ENV === 'production'
     name: COOKIE_NAME,
     secret: 'secretkey',
     store: new RedisStore({ 
-      client: redisClient,
+      client: redis,
       disableTouch: true,
     }),
     cookie: {

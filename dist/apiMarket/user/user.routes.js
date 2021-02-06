@@ -12,5 +12,7 @@ router.get('/', user.getUser);
 router.post('/', user.create);
 router.get('/auth/logout', isAuthManager_1.isAuth, user.logout);
 router.post('/auth', user.login);
+router.post('/forgot-password', user.forgotPassword);
+router.post('/change-password', user.changePassword);
 exports.default = router;
 //# sourceMappingURL=user.routes.js.map

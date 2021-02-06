@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addContactBusiness = exports.addContact = exports.sendMailReservation = exports.sendMailWelcomeStore = exports.sendMailWelcomeUser = void 0;
+exports.addContactBusiness = exports.addContact = exports.sendMailChangePassword = exports.sendMailReservation = exports.sendMailWelcomeStore = exports.sendMailWelcomeUser = void 0;
 const mail_1 = __importDefault(require("@sendgrid/mail"));
 const client_1 = __importDefault(require("@sendgrid/client"));
 const formatDate_1 = require("../utils/formatDate");
@@ -61,6 +61,24 @@ const sendMailReservation = (booking) => {
     });
 };
 exports.sendMailReservation = sendMailReservation;
+const sendMailChangePassword = (user, token) => {
+    const msg = {
+        from: 'Reserly <hola@reserly.mx>',
+        to: user.email,
+        templateId: 'd-7146674ba15c432196fceaadd2ef990d',
+        dynamicTemplateData: {
+            name: `${user.firstName}`,
+            url: `https://reserly.mx/change-password/${token}`
+        }
+    };
+    mail_1.default.send(msg).then(() => {
+        console.log('Email sent to', user.email);
+    }).catch((error) => {
+        console.log('Email ERROR', error.message);
+        console.error(error);
+    });
+};
+exports.sendMailChangePassword = sendMailChangePassword;
 const addContact = (user) => {
     const request = {
         method: 'PUT',
