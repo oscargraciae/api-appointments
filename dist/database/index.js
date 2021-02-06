@@ -32,7 +32,7 @@ const setupDB = () => __awaiter(void 0, void 0, void 0, function* () {
         username: process.env.DATABASE_USER,
         password: process.env.DATABASE_PASSWORD,
         logging: true,
-        synchronize: !constants_1.__prod__ ? true : false,
+        synchronize: !constants_1.__prod__ ? false : false,
         namingStrategy: new typeorm_naming_strategies_1.SnakeNamingStrategy(),
         entities: [
             User_1.User,

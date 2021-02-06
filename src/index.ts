@@ -6,10 +6,12 @@ import cors from 'cors';
 import redis from 'redis';
 import session from 'express-session';
 import morgan from 'morgan';
+import sgMail from '@sendgrid/mail';
+import sgClient from '@sendgrid/client';
 
 import setupDB from './database';
 import routesManager from './config/routesManager';
-import { COOKIE_NAME, __prod__ } from './config/constants';
+import { COOKIE_NAME, DOMAIN_NAME, __prod__ } from './config/constants';
 import routesMarket from './config/routesMarket';
 import setupSocket from './config/sockets';
 
@@ -17,16 +19,16 @@ const RedisStore = require('connect-redis')(session);
 
 require('dotenv-flow').config();
 
+if (process.env.SENDGRID_API_KEY) {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  sgClient.setApiKey(process.env.SENDGRID_API_KEY);
+}
+
 const main = () => {
   setupDB();
 
   const app = express();
   
-  console.log('AWS_ACCESS_KEY_ID', process.env.AWS_ACCESS_KEY_ID);
-  console.log('AWS_ACCESS_KEY_ID', process.env.DATABASE_USER);
-  console.log('AWS_ACCESS_KEY_ID', process.env.DATABASE_HOST);
-  
-
   // app.disable('etag');
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
@@ -35,7 +37,7 @@ const main = () => {
     origin: ['http://localhost:8002', 'http://localhost:8000', 'https://reserly.mx',],
     credentials: true,
   }));
-  
+
   app.use(morgan('dev'));
   
   app.set("trust proxy", 1);
@@ -52,8 +54,8 @@ const main = () => {
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
       httpOnly: false,
-      secure: true,
-      domain: 'reserly.mx'
+      secure: __prod__, // production true
+      domain: DOMAIN_NAME,
       // httpOnly: false, // No afecta
       // sameSite: "lax", // csrf
       // secure: false, // cookie only works in https. -> En true mo me almaneca la sesion

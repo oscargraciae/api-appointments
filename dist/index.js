@@ -10,6 +10,8 @@ const cors_1 = __importDefault(require("cors"));
 const redis_1 = __importDefault(require("redis"));
 const express_session_1 = __importDefault(require("express-session"));
 const morgan_1 = __importDefault(require("morgan"));
+const mail_1 = __importDefault(require("@sendgrid/mail"));
+const client_1 = __importDefault(require("@sendgrid/client"));
 const database_1 = __importDefault(require("./database"));
 const routesManager_1 = __importDefault(require("./config/routesManager"));
 const constants_1 = require("./config/constants");
@@ -17,12 +19,13 @@ const routesMarket_1 = __importDefault(require("./config/routesMarket"));
 const sockets_1 = __importDefault(require("./config/sockets"));
 const RedisStore = require('connect-redis')(express_session_1.default);
 require('dotenv-flow').config();
+if (process.env.SENDGRID_API_KEY) {
+    mail_1.default.setApiKey(process.env.SENDGRID_API_KEY);
+    client_1.default.setApiKey(process.env.SENDGRID_API_KEY);
+}
 const main = () => {
     database_1.default();
     const app = express_1.default();
-    console.log('AWS_ACCESS_KEY_ID', process.env.AWS_ACCESS_KEY_ID);
-    console.log('AWS_ACCESS_KEY_ID', process.env.DATABASE_USER);
-    console.log('AWS_ACCESS_KEY_ID', process.env.DATABASE_HOST);
     app.use(body_parser_1.default.json());
     app.use(body_parser_1.default.urlencoded({ extended: true }));
     app.use(cors_1.default({
@@ -42,8 +45,8 @@ const main = () => {
         cookie: {
             maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
             httpOnly: false,
-            secure: true,
-            domain: 'reserly.mx'
+            secure: constants_1.__prod__,
+            domain: constants_1.DOMAIN_NAME,
         },
         saveUninitialized: false,
         resave: false,

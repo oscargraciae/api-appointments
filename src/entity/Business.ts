@@ -18,7 +18,7 @@ export class Business extends BaseEntity{
   @Column({ nullable: true })
   description: string
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: 'https://reserly-dev.s3.us-east-2.amazonaws.com/11-71e78474-351c-4407-88f5-2788c79e9ff2.jpg' })
   cover: string
 
   @Column({ nullable: true })
@@ -53,7 +53,7 @@ export class Business extends BaseEntity{
   businessService: BusinessService
 
   @OneToMany(() => BusinessUser, businessUser => businessUser.business)
-  businessUser: BusinessUser
+  businessUser: BusinessUser[]
 
   @CreateDateColumn()
   createdAt = new Date()

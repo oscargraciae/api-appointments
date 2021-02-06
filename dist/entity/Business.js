@@ -37,7 +37,7 @@ __decorate([
     __metadata("design:type", String)
 ], Business.prototype, "description", void 0);
 __decorate([
-    typeorm_1.Column({ nullable: true }),
+    typeorm_1.Column({ nullable: true, default: 'https://reserly-dev.s3.us-east-2.amazonaws.com/11-71e78474-351c-4407-88f5-2788c79e9ff2.jpg' }),
     __metadata("design:type", String)
 ], Business.prototype, "cover", void 0);
 __decorate([
@@ -83,7 +83,7 @@ __decorate([
 ], Business.prototype, "businessService", void 0);
 __decorate([
     typeorm_1.OneToMany(() => BusinessUser_1.BusinessUser, businessUser => businessUser.business),
-    __metadata("design:type", BusinessUser_1.BusinessUser)
+    __metadata("design:type", Array)
 ], Business.prototype, "businessUser", void 0);
 __decorate([
     typeorm_1.CreateDateColumn(),

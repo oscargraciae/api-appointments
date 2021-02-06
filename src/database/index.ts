@@ -24,7 +24,7 @@ const setupDB = async () => {
     username: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
     logging: true,
-    synchronize: !__prod__ ? true : false,
+    synchronize: !__prod__ ? false : false,
     namingStrategy: new SnakeNamingStrategy(),
     entities: [
       User,

@@ -10,8 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BookingController = void 0;
-const Booking_1 = require("../../entity/Booking");
 const typeorm_1 = require("typeorm");
+const Booking_1 = require("../../entity/Booking");
 class BookingController {
     create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {

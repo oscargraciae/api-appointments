@@ -1,10 +1,10 @@
 import { Response } from 'express'
+import { In, LessThan, MoreThanOrEqual } from 'typeorm';
 
 import { MyRequest } from "../../config/types";
 
 // ENTITIES
 import { Booking } from '../../entity/Booking';
-import { In, LessThan, MoreThanOrEqual } from 'typeorm';
 
 export class BookingController {
   async create(req: MyRequest, res: Response) {

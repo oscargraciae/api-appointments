@@ -1,9 +1,11 @@
 import { Response } from 'express';
 
+
 import { auth } from "../../service/auth";
 import { User } from "../../entity/User";
 import { MyRequest } from "../../config/types";
-import { COOKIE_NAME } from '../../config/constants';
+import { COOKIE_NAME, DOMAIN_NAME } from '../../config/constants';
+import { addContact, sendMailWelcomeUser } from '../../mails/mails';
 
 class UserController {
   async getUser(req: MyRequest, res: Response) {
@@ -55,6 +57,12 @@ class UserController {
       }
       
       req.session!.userId = user.id;
+
+      if (user) {
+        sendMailWelcomeUser(user);
+        addContact(user);
+      }
+
       return res.json({ success: true, user });
     } catch (error) {
       return res.json({
@@ -67,7 +75,7 @@ class UserController {
   async logout(req: MyRequest, res: Response) {
     try {
       return req.session.destroy(err => {
-        res.clearCookie(COOKIE_NAME, { domain: 'reserly.mx' });
+        res.clearCookie(COOKIE_NAME, { domain: DOMAIN_NAME });
         if (err) {
           res.status(400).send('Unable to log out')
         } else {

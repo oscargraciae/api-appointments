@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const auth_1 = require("../../service/auth");
 const User_1 = require("../../entity/User");
 const constants_1 = require("../../config/constants");
+const mails_1 = require("../../mails/mails");
 class UserController {
     getUser(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -64,6 +65,10 @@ class UserController {
                     return res.json({ success: false, message: 'Error al registrar el usuario.' });
                 }
                 req.session.userId = user.id;
+                if (user) {
+                    mails_1.sendMailWelcomeUser(user);
+                    mails_1.addContact(user);
+                }
                 return res.json({ success: true, user });
             }
             catch (error) {
@@ -78,7 +83,7 @@ class UserController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 return req.session.destroy(err => {
-                    res.clearCookie(constants_1.COOKIE_NAME, { domain: 'reserly.mx' });
+                    res.clearCookie(constants_1.COOKIE_NAME, { domain: constants_1.DOMAIN_NAME });
                     if (err) {
                         res.status(400).send('Unable to log out');
                     }

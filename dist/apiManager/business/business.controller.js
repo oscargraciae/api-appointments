@@ -23,6 +23,8 @@ const BusinessUser_1 = require("../../entity/BusinessUser");
 const Business_1 = require("../../entity/Business");
 const BusinessHour_1 = require("../../entity/BusinessHour");
 const BusinessFile_1 = require("../../entity/BusinessFile");
+const User_1 = require("../../entity/User");
+const mails_1 = require("../../mails/mails");
 const s3 = new aws_sdk_1.S3({ region: 'us-east-2', credentials: { accessKeyId: 'AKIAX64L7XCVTA7JXFEM', secretAccessKey: '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' } });
 const convertToJpg = (input) => __awaiter(void 0, void 0, void 0, function* () {
     return sharp_1.default(input)
@@ -61,6 +63,11 @@ class BusinessController {
                 }
                 bussinessId = business.id;
                 yield BusinessUser_1.BusinessUser.create({ userId: req.session.userId, businessId: business.id }).save();
+                const user = yield User_1.User.findOne({ id: req.session.userId });
+                if (user) {
+                    mails_1.sendMailWelcomeStore(user.email);
+                    mails_1.addContactBusiness(user);
+                }
                 return res.json({ success: true, business });
             }
             catch (error) {

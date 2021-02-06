@@ -11,7 +11,7 @@ const URL_V1 = '/api/v1';
 exports.default = (app) => {
     app.use(`${URL_V1}/businesses`, business_routes_1.default);
     app.use(`${URL_V1}/users`, user_routes_1.default);
-    app.use(`${URL_V1}/booking`, booking_routes_1.default);
+    app.use(`${URL_V1}/bookings`, booking_routes_1.default);
     app.use(`${URL_V1}/categories`, category_routes_1.default);
 };
 //# sourceMappingURL=routesMarket.js.map

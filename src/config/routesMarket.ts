@@ -9,6 +9,6 @@ const URL_V1 = '/api/v1';
 export default (app: any) => {
   app.use(`${URL_V1}/businesses`, business);
   app.use(`${URL_V1}/users`, user);
-  app.use(`${URL_V1}/booking`, booking);
+  app.use(`${URL_V1}/bookings`, booking);
   app.use(`${URL_V1}/categories`, category);
 }

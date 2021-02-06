@@ -20,6 +20,7 @@ class BusinessService {
                 .getRepository(Business_1.Business)
                 .createQueryBuilder('business')
                 .where(categoryId ? `business.businessCategoryId = :categoryId` : '1=1', { categoryId })
+                .andWhere('business.isPublic = true')
                 .innerJoinAndSelect('business.businessCategory', 'businessCategory')
                 .innerJoinAndSelect('business.businessAddress', 'businessAddress', '(6371 * acos(cos(radians(:lat)) * cos(radians(lat)) * cos(radians(:lng) - radians(lng)) + sin(radians(:lat)) * sin(radians(lat)))) <= 5', { lat, lng })
                 .getMany();

@@ -11,8 +11,10 @@ import { BusinessUser } from "../../entity/BusinessUser";
 import { Business } from "../../entity/Business";
 import { BusinessHour } from "../../entity/BusinessHour";
 import { BusinessFile } from "../../entity/BusinessFile";
+import { User } from "../../entity/User";
 
 import { MyRequest } from "../../config/types";
+import { addContact, addContactBusiness, sendMailWelcomeStore } from "../../mails/mails";
 
 const s3 = new S3({ region: 'us-east-2', credentials: { accessKeyId: 'AKIAX64L7XCVTA7JXFEM', secretAccessKey: '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' } });
 
@@ -72,6 +74,14 @@ class BusinessController {
       bussinessId = business.id;
       await BusinessUser.create({ userId: req.session.userId, businessId: business.id }).save();
 
+
+      const user = await User.findOne({ id: req.session.userId });
+
+      if (user) {
+        sendMailWelcomeStore(user.email)
+        addContactBusiness(user);
+      }
+      
       return res.json({ success: true, business })
     } catch (error) {
       await Business.delete({ id: bussinessId })

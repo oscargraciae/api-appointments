@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const auth_1 = require("../../service/auth");
 const User_1 = require("../../entity/User");
 const constants_1 = require("../../config/constants");
+const mails_1 = require("../../mails/mails");
 class UserController {
     login(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -36,11 +37,16 @@ class UserController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const userBody = req.body;
+                const us = yield User_1.User.findOne({ where: { email: userBody.email } });
+                if (us) {
+                    return res.json({ success: false, message: 'Lo sentimos, este correo electrónico ya esta registrado.' });
+                }
                 const user = yield User_1.User.create(userBody).save();
                 if (!user) {
-                    return res.json({ success: false, message: 'No error al registrar el usuario.' });
+                    return res.json({ success: false, message: 'Error al registrar el usuario.' });
                 }
                 req.session.userId = user.id;
+                mails_1.addContact(user);
                 return res.json({ success: true, user });
             }
             catch (error) {
@@ -55,7 +61,7 @@ class UserController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 return req.session.destroy(err => {
-                    res.clearCookie(constants_1.COOKIE_NAME, { domain: 'reserly.mx' });
+                    res.clearCookie(constants_1.COOKIE_NAME, { domain: constants_1.DOMAIN_NAME });
                     if (err) {
                         res.status(400).send('Unable to log out');
                     }
