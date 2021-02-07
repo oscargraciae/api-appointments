@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { LessThan, MoreThanOrEqual } from 'typeorm';
+import { In, LessThan, MoreThanOrEqual } from 'typeorm';
 
 import { BookingService } from "../../entity/BookingService";
 import { BusinessService } from "../../entity/BusinessService";
@@ -12,7 +12,7 @@ export class BookingController {
   
   async getAll(req: MyRequest, res: Response) {
     try {
-      const { endDate, startDate } :any = req.query;
+      const { endDate, startDate, statuses } :any = req.query;
       let where : any = {};
       
       if (endDate) {
@@ -21,6 +21,10 @@ export class BookingController {
 
       if (startDate) {
         where.bookingDate = LessThan(startDate)
+      }
+
+      if (statuses) {
+        where.bookingStatusId = In(statuses);
       }
 
       const bookings = await Booking.find({

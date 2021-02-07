@@ -18,13 +18,16 @@ class BookingController {
     getAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { endDate, startDate } = req.query;
+                const { endDate, startDate, statuses } = req.query;
                 let where = {};
                 if (endDate) {
                     where.bookingDate = typeorm_1.MoreThanOrEqual(endDate);
                 }
                 if (startDate) {
                     where.bookingDate = typeorm_1.LessThan(startDate);
+                }
+                if (statuses) {
+                    where.bookingStatusId = typeorm_1.In(statuses);
                 }
                 const bookings = yield Booking_1.Booking.find({
                     where: Object.assign({ customerId: req.session.userId }, where),

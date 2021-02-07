@@ -22,15 +22,12 @@ export class BookingController {
 
   async getAll(req: MyRequest, res: Response) {
     try {
-      console.log('STATUS', req.query);
       const { status, statuses, dateEnd, startDate } :any = req.query;
 
       const where :any = {};
       where.businessId = req.user.businessUser.businessId;
       
       if (statuses) {
-        console.log('STATUS', status);
-        console.log('tipo de status', typeof status);
         where.bookingStatusId = In(statuses);
       }
 

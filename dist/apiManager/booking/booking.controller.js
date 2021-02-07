@@ -31,13 +31,10 @@ class BookingController {
     getAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                console.log('STATUS', req.query);
                 const { status, statuses, dateEnd, startDate } = req.query;
                 const where = {};
                 where.businessId = req.user.businessUser.businessId;
                 if (statuses) {
-                    console.log('STATUS', status);
-                    console.log('tipo de status', typeof status);
                     where.bookingStatusId = typeorm_1.In(statuses);
                 }
                 if (status) {
