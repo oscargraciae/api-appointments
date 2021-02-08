@@ -19,6 +19,6 @@ router.get('/:id/hours', isAuthManager_1.isAuth, business.getHours);
 router.get('/upload/photos', isAuthManager_1.isAuth, business.getPhotos);
 router.delete('/upload/photos/:id', isAuthManager_1.isAuth, business.deletePhoto);
 router.post('/upload/cover', isAuthManager_1.isAuth, upload.single('file'), business.uploadCover);
-router.post('/upload/photos', isAuthManager_1.isAuth, upload.array('files'), business.uploadPhotos);
+router.post('/upload/photos', isAuthManager_1.isAuth, upload.single('file'), business.uploadPhoto);
 exports.default = router;
 //# sourceMappingURL=business.routes.js.map

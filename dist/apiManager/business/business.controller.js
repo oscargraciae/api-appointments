@@ -155,26 +155,20 @@ class BusinessController {
             }
         });
     }
-    uploadPhotos(req, res) {
+    uploadPhoto(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                console.log('Fotos', req.files);
-                console.log('Fotos', req.files);
-                if (req.files.length > 0) {
-                    Array(req.files).map((file) => __awaiter(this, void 0, void 0, function* () {
-                        const miniBuffer = yield imagemin_1.default.buffer(file.buffer, {
-                            plugins: [convertToJpg, imagemin_mozjpeg_1.default({ quality: 80 })]
-                        });
-                        const fileName = `${req.user.businessUser.businessId}-${uuid_1.v4()}${path_1.default.extname(file.originalname)}`;
-                        let resp = yield s3.upload({
-                            Bucket: 'reserly-dev',
-                            Key: `${req.user.businessUser.businessId}/${fileName}`,
-                            Body: miniBuffer,
-                            ACL: 'public-read',
-                        }).promise();
-                        yield BusinessFile_1.BusinessFile.create({ file: resp.Location, businessId: req.user.businessUser.businessId }).save();
-                    }));
-                }
+                const miniBuffer = yield imagemin_1.default.buffer(req.file.buffer, {
+                    plugins: [convertToJpg, imagemin_mozjpeg_1.default({ quality: 80 })]
+                });
+                const fileName = `${req.user.businessUser.businessId}-${uuid_1.v4()}${path_1.default.extname(req.file.originalname)}`;
+                let resp = yield s3.upload({
+                    Bucket: 'reserly-dev',
+                    Key: `${req.user.businessUser.businessId}/${fileName}`,
+                    Body: miniBuffer,
+                    ACL: 'public-read',
+                }).promise();
+                yield BusinessFile_1.BusinessFile.create({ file: resp.Location, businessId: req.user.businessUser.businessId }).save();
                 const files = yield BusinessFile_1.BusinessFile.find({ where: { businessId: req.user.businessUser.businessId } });
                 return res.json({ success: true, message: 'subiendo imagen', data: req.file, files });
             }

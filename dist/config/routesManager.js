@@ -8,6 +8,7 @@ const business_routes_1 = __importDefault(require("../apiManager/business/busine
 const service_routes_1 = __importDefault(require("../apiManager/service/service.routes"));
 const address_routes_1 = __importDefault(require("../apiManager/address/address.routes"));
 const booking_routes_1 = __importDefault(require("../apiManager/booking/booking.routes"));
+const customer_routes_1 = __importDefault(require("../apiManager/customer/customer.routes"));
 const URL_V1 = '/api/manager_v1';
 exports.default = (app) => {
     app.use(`${URL_V1}/users`, user_routes_1.default);
@@ -15,5 +16,6 @@ exports.default = (app) => {
     app.use(`${URL_V1}/businesses/:businessId/services`, service_routes_1.default);
     app.use(`${URL_V1}/businesses/:businessId/addresses`, address_routes_1.default);
     app.use(`${URL_V1}/bookings`, booking_routes_1.default);
+    app.use(`${URL_V1}/customers`, customer_routes_1.default);
 };
 //# sourceMappingURL=routesManager.js.map

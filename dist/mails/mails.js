@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addContactBusiness = exports.addContact = exports.sendMailChangePassword = exports.sendMailReservation = exports.sendMailWelcomeStore = exports.sendMailWelcomeUser = void 0;
+exports.addContactBusiness = exports.addContact = exports.sendMailChangePassword = exports.sendMailNotificationCustomer = exports.sendMailReservation = exports.sendMailWelcomeStore = exports.sendMailWelcomeUser = void 0;
 const mail_1 = __importDefault(require("@sendgrid/mail"));
 const client_1 = __importDefault(require("@sendgrid/client"));
 const formatDate_1 = require("../utils/formatDate");
@@ -61,6 +61,32 @@ const sendMailReservation = (booking) => {
     });
 };
 exports.sendMailReservation = sendMailReservation;
+const sendMailNotificationCustomer = (booking, to, status) => {
+    console.log('booking email', booking);
+    console.log('booking TO', to);
+    const msg = {
+        from: 'Reserly <hola@reserly.mx>',
+        to,
+        templateId: 'd-d90e2c1ff1a3489693fe135d0b2180da',
+        dynamicTemplateData: {
+            subject: `Notificación: Tu reservación fue ${status}`,
+            businessName: booking.business.name,
+            customerName: `${booking.customer.firstName}`,
+            bookingDate: formatDate_1.formatDateLG(booking.bookingDate),
+            time: minutesToHour_1.minutesToHour(booking.totalTime),
+            price: `$${booking.totalPrice}MXN`,
+            urlDetail: `https://reserly.mx/bookings`,
+            status: status,
+        }
+    };
+    mail_1.default.send(msg).then(() => {
+        console.log('Email sent to', to);
+    }).catch((error) => {
+        console.log('Email ERROR', error.message);
+        console.error(error);
+    });
+};
+exports.sendMailNotificationCustomer = sendMailNotificationCustomer;
 const sendMailChangePassword = (user, token) => {
     const msg = {
         from: 'Reserly <hola@reserly.mx>',

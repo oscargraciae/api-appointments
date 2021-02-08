@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BookingStatus = void 0;
 const typeorm_1 = require("typeorm");
+const Booking_1 = require("./Booking");
 let BookingStatus = class BookingStatus extends typeorm_1.BaseEntity {
 };
 __decorate([
@@ -21,6 +22,10 @@ __decorate([
     typeorm_1.Column(),
     __metadata("design:type", String)
 ], BookingStatus.prototype, "name", void 0);
+__decorate([
+    typeorm_1.OneToMany(() => Booking_1.Booking, booking => booking.bookingStatus),
+    __metadata("design:type", Array)
+], BookingStatus.prototype, "bookings", void 0);
 BookingStatus = __decorate([
     typeorm_1.Entity({ name: 'booking_statuses' })
 ], BookingStatus);

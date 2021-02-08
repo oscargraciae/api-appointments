@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Booking = void 0;
 const typeorm_1 = require("typeorm");
 const BookingService_1 = require("./BookingService");
+const BookingStatus_1 = require("./BookingStatus");
 const Business_1 = require("./Business");
 const User_1 = require("./User");
 let Booking = class Booking extends typeorm_1.BaseEntity {
@@ -67,6 +68,10 @@ __decorate([
     typeorm_1.Column(),
     __metadata("design:type", Number)
 ], Booking.prototype, "businessId", void 0);
+__decorate([
+    typeorm_1.ManyToOne(() => BookingStatus_1.BookingStatus, bookingStatus => bookingStatus.bookings),
+    __metadata("design:type", BookingStatus_1.BookingStatus)
+], Booking.prototype, "bookingStatus", void 0);
 __decorate([
     typeorm_1.Column(),
     __metadata("design:type", Number)

@@ -7,26 +7,6 @@ import { Booking } from '../entity/Booking';
 import { User } from "../entity/User";
 import { minutesToHour } from '../utils/minutesToHour';
 
-// export const mailWelcomeUser = (user: User) => {
-//   console.log('Enviando correo');
-  
-//   const msg : MailDataRequired = {
-//     from: 'hola@reserly.mx', // Change to your verified sender
-//     to: 'oscar.graciae@gmail.com', // Change to your recipient
-//     // subject: 'Sending with SendGrid is Fun',
-//     // text: 'and easy to do anywhere, even with Node.js',
-//     // html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-//     templateId: 'd-26e72218c47145bcbdccaffa5d741d11',
-//   }
-
-//   sgMail.send(msg).then(() => {
-//     console.log('Email sent')
-//   }).catch((error) => {
-//     console.log('Email ERROR', error.message)
-//     console.error(error)
-//   })
-// }
-
 export const sendMailWelcomeUser = (user: User) => {
   const msg : MailDataRequired = { 
     from: 'Reserly <hola@reserly.mx>',
@@ -77,6 +57,34 @@ export const sendMailReservation = (booking: Booking) => {
 
   sgMail.send(msg).then(() => {
     console.log('Email sent to', booking.business.businessUser[0].user.email)
+  }).catch((error) => {
+    console.log('Email ERROR', error.message)
+    console.error(error)
+  })
+}
+
+export const sendMailNotificationCustomer = (booking: Booking, to: string, status: string) => {
+  console.log('booking email', booking);
+  console.log('booking TO', to);
+  
+  const msg : MailDataRequired = { 
+    from: 'Reserly <hola@reserly.mx>',
+    to,
+    templateId: 'd-d90e2c1ff1a3489693fe135d0b2180da',
+    dynamicTemplateData: {
+      subject: `Notificación: Tu reservación fue ${status}`,
+      businessName: booking.business.name,
+      customerName: `${booking.customer.firstName}`,
+      bookingDate: formatDateLG(booking.bookingDate),
+      time: minutesToHour(booking.totalTime),
+      price: `$${booking.totalPrice}MXN`,
+      urlDetail: `https://reserly.mx/bookings`,
+      status: status,
+    }
+  }
+
+  sgMail.send(msg).then(() => {
+    console.log('Email sent to', to)
   }).catch((error) => {
     console.log('Email ERROR', error.message)
     console.error(error)

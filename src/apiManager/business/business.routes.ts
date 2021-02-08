@@ -22,6 +22,6 @@ router.get('/:id/hours', isAuth, business.getHours)
 router.get('/upload/photos', isAuth, business.getPhotos)
 router.delete('/upload/photos/:id', isAuth, business.deletePhoto)
 router.post('/upload/cover',isAuth, upload.single('file'), business.uploadCover)
-router.post('/upload/photos',isAuth, upload.array('files'), business.uploadPhotos)
+router.post('/upload/photos',isAuth, upload.single('file'), business.uploadPhoto)
 
 export default router;

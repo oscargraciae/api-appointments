@@ -1,6 +1,7 @@
 import { Response } from 'express'
 import { In, LessThan, MoreThanOrEqual } from 'typeorm';
 
+import { sendMailNotificationCustomer } from '../../mails/mails';
 import { MyRequest } from "../../config/types";
 
 // ENTITIES
@@ -45,7 +46,7 @@ export class BookingController {
 
       const bookings = await Booking.find({ 
         where,
-        relations: ['customer'],
+        relations: ['customer', 'bookingStatus'],
         order: { id: 'DESC' }
       });
       return res.json({ success: true, bookings });
@@ -73,6 +74,46 @@ export class BookingController {
       const body: Booking = req.body;
       const booking = await Booking.update({ id }, body);
       
+      return res.json({ success: true, booking });
+    } catch (error) {
+      return res.json({ success: false, message: error.message });
+    }
+  }
+
+  async bookingAccepted(req: MyRequest, res: Response) {
+    try {
+      const id : number = Number(req.params.id);
+      const booking = await Booking.update({ id }, { bookingStatusId: 2 });
+      
+      const bookingDetail = await Booking.findOne({ 
+        where:  { id },
+        relations: ['customer', 'business'],
+      });
+
+      if (bookingDetail) {
+        sendMailNotificationCustomer(bookingDetail, bookingDetail.customer.email, 'Aceptada');
+      }
+      
+      return res.json({ success: true, booking });
+    } catch (error) {
+      return res.json({ success: false, message: error.message });
+    }
+  }
+
+  async bookingCanceled(req: MyRequest, res: Response) {
+    try {
+      const id : number = Number(req.params.id);
+      const booking = await Booking.update({ id }, { bookingStatusId: 3 });
+      
+      const bookingDetail = await Booking.findOne({ 
+        where:  { id },
+        relations: ['customer', 'business'],
+      });
+
+      if (bookingDetail) {
+        sendMailNotificationCustomer(bookingDetail, bookingDetail.customer.email, 'Cancelada');
+      }
+
       return res.json({ success: true, booking });
     } catch (error) {
       return res.json({ success: false, message: error.message });

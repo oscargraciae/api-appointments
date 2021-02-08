@@ -1,5 +1,6 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { BookingService } from "./BookingService";
+import { BookingStatus } from "./BookingStatus";
 import { Business } from "./Business";
 import { User } from "./User";
 
@@ -42,9 +43,8 @@ export class Booking extends BaseEntity {
   @Column()
   businessId: number
   
-  // @OneToMany(() => BookingStatus, bookingStatus => bookingStatus.bookings)
-  // @JoinColumn()
-  // bookingStatus: BookingStatus
+  @ManyToOne(() => BookingStatus, bookingStatus => bookingStatus.bookings)
+  bookingStatus: BookingStatus
 
   @Column()
   bookingStatusId: number

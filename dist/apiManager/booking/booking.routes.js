@@ -9,5 +9,7 @@ router.post('/', booking.create);
 router.get('/', isAuthManager_1.isAuth, booking.getAll);
 router.get('/:id', isAuthManager_1.isAuth, booking.get);
 router.put('/:id', isAuthManager_1.isAuth, booking.update);
+router.put('/:id/accepted', isAuthManager_1.isAuth, booking.bookingAccepted);
+router.put('/:id/canceled', isAuthManager_1.isAuth, booking.bookingCanceled);
 exports.default = router;
 //# sourceMappingURL=booking.routes.js.map

@@ -1,0 +1,1 @@
+{"version":3,"file":"customer.routes.js","sourceRoot":"","sources":["../../../src/apiManager/customer/customer.routes.ts"],"names":[],"mappings":";;AAAA,qCAAiC;AACjC,kEAAwD;AACxD,+DAA2D;AAE3D,MAAM,MAAM,GAAG,gBAAM,EAAE,CAAC;AACxB,MAAM,OAAO,GAAG,IAAI,wCAAkB,EAAE,CAAC;AAEzC,MAAM,CAAC,GAAG,CAAC,GAAG,EAAE,sBAAM,EAAE,OAAO,CAAC,MAAM,CAAC,CAAC;AAExC,kBAAe,MAAM,CAAC"}

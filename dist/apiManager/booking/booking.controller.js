@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BookingController = void 0;
 const typeorm_1 = require("typeorm");
+const mails_1 = require("../../mails/mails");
 const Booking_1 = require("../../entity/Booking");
 class BookingController {
     create(req, res) {
@@ -48,7 +49,7 @@ class BookingController {
                 }
                 const bookings = yield Booking_1.Booking.find({
                     where,
-                    relations: ['customer'],
+                    relations: ['customer', 'bookingStatus'],
                     order: { id: 'DESC' }
                 });
                 return res.json({ success: true, bookings });
@@ -79,6 +80,44 @@ class BookingController {
                 const id = Number(req.params.id);
                 const body = req.body;
                 const booking = yield Booking_1.Booking.update({ id }, body);
+                return res.json({ success: true, booking });
+            }
+            catch (error) {
+                return res.json({ success: false, message: error.message });
+            }
+        });
+    }
+    bookingAccepted(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const id = Number(req.params.id);
+                const booking = yield Booking_1.Booking.update({ id }, { bookingStatusId: 2 });
+                const bookingDetail = yield Booking_1.Booking.findOne({
+                    where: { id },
+                    relations: ['customer', 'business'],
+                });
+                if (bookingDetail) {
+                    mails_1.sendMailNotificationCustomer(bookingDetail, bookingDetail.customer.email, 'Aceptada');
+                }
+                return res.json({ success: true, booking });
+            }
+            catch (error) {
+                return res.json({ success: false, message: error.message });
+            }
+        });
+    }
+    bookingCanceled(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const id = Number(req.params.id);
+                const booking = yield Booking_1.Booking.update({ id }, { bookingStatusId: 3 });
+                const bookingDetail = yield Booking_1.Booking.findOne({
+                    where: { id },
+                    relations: ['customer', 'business'],
+                });
+                if (bookingDetail) {
+                    mails_1.sendMailNotificationCustomer(bookingDetail, bookingDetail.customer.email, 'Cancelada');
+                }
                 return res.json({ success: true, booking });
             }
             catch (error) {

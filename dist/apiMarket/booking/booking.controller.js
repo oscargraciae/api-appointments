@@ -31,7 +31,7 @@ class BookingController {
                 }
                 const bookings = yield Booking_1.Booking.find({
                     where: Object.assign({ customerId: req.session.userId }, where),
-                    relations: ['business'],
+                    relations: ['business', 'bookingStatus'],
                     order: { createdAt: 'DESC' },
                 });
                 return res.json({ success: true, bookings });

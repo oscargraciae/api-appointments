@@ -29,7 +29,7 @@ export class BookingController {
 
       const bookings = await Booking.find({
         where: { customerId: req.session.userId, ...where },
-        relations: ['business'],
+        relations: ['business', 'bookingStatus'],
         order: { createdAt: 'DESC' },
       })
       return res.json({ success: true, bookings });
