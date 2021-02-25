@@ -51,18 +51,26 @@ __decorate([
 __decorate([
     typeorm_1.Column({ default: false }),
     __metadata("design:type", Boolean)
+], Business.prototype, "isCompleted", void 0);
+__decorate([
+    typeorm_1.Column({ default: false }),
+    __metadata("design:type", Boolean)
 ], Business.prototype, "isPublic", void 0);
 __decorate([
     typeorm_1.Column({ default: false }),
     __metadata("design:type", Boolean)
-], Business.prototype, "isCompleted", void 0);
+], Business.prototype, "hasParallelBookings", void 0);
+__decorate([
+    typeorm_1.Column({ default: true }),
+    __metadata("design:type", Boolean)
+], Business.prototype, "hasBookingConfimation", void 0);
 __decorate([
     typeorm_1.ManyToOne(() => BusinessCategory_1.BusinessCategory, businessCategory => businessCategory.business),
     typeorm_1.JoinColumn(),
     __metadata("design:type", BusinessCategory_1.BusinessCategory)
 ], Business.prototype, "businessCategory", void 0);
 __decorate([
-    typeorm_1.Column(),
+    typeorm_1.Column({ nullable: true }),
     __metadata("design:type", Number)
 ], Business.prototype, "businessCategoryId", void 0);
 __decorate([

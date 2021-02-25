@@ -16,6 +16,7 @@ import { BusinessHour } from '../entity/BusinessHour';
 
 import { __prod__ } from '../config/constants';
 
+
 const setupDB = async () => {
   await createConnection({
     host: process.env.DATABASE_HOST,

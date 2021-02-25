@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
+const Booking_1 = require("../../entity/Booking");
 const Business_1 = require("../../entity/Business");
 const BusinessFile_1 = require("../../entity/BusinessFile");
 const business_service_1 = require("./business.service");
@@ -17,12 +18,17 @@ class BusinessController {
     getBusiness(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let { lat, lng, categoryId } = req.query;
+                let { lat, lng, categoryId, zoom } = req.query;
+                let kms = 5;
+                if (zoom) {
+                    kms = 40000 / Math.pow(2, zoom) * 2;
+                    console.log('kms', kms);
+                }
                 if (!lat && lng) {
                     lat = 25.6866142;
                     lng = -100.3161126;
                 }
-                const business = yield new business_service_1.BusinessService().getAll({ lat, lng }, categoryId);
+                const business = yield new business_service_1.BusinessService().getAll(kms, { lat, lng }, categoryId);
                 return res.json({
                     success: true,
                     business,
@@ -46,11 +52,19 @@ class BusinessController {
                     .leftJoinAndSelect('business.hours', 'hours')
                     .where("business.id = :id", { id })
                     .getOne();
-                return res.json({
-                    success: true,
-                    business,
-                    mensaje: 'Hola prueba cambio de docker r'
-                });
+                return res.json({ success: true, business });
+            }
+            catch (error) {
+                return res.json({ success: false, message: error.message });
+            }
+        });
+    }
+    getAvailableTime(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let { startTime, endTime } = req.query;
+                const bookings = yield Booking_1.Booking.find({ where: { businessId: req.params.id, bookingDate: typeorm_1.Between(startTime, endTime) } });
+                return res.json({ bookings });
             }
             catch (error) {
                 return res.json({ success: false, message: error.message });

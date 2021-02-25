@@ -52,6 +52,7 @@ class BookingController {
                     relations: ['customer', 'bookingStatus'],
                     order: { id: 'DESC' }
                 });
+                console.log('bookings', bookings);
                 return res.json({ success: true, bookings });
             }
             catch (error) {
@@ -65,7 +66,7 @@ class BookingController {
                 const id = Number(req.params.id);
                 const booking = yield Booking_1.Booking.findOne({
                     where: { id },
-                    relations: ['customer', 'bookingService', 'bookingService.businessService'],
+                    relations: ['customer', 'bookingStatus', 'bookingService', 'bookingService.businessService'],
                 });
                 return res.json({ success: true, booking });
             }

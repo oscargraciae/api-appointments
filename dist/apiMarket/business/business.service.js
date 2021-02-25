@@ -13,16 +13,18 @@ exports.BusinessService = void 0;
 const typeorm_1 = require("typeorm");
 const Business_1 = require("../../entity/Business");
 class BusinessService {
-    getAll(coords, categoryId) {
+    getAll(kms, coords, categoryId) {
         return __awaiter(this, void 0, void 0, function* () {
             const { lat, lng } = coords;
             return yield typeorm_1.getConnection()
                 .getRepository(Business_1.Business)
                 .createQueryBuilder('business')
+                .addSelect(`(6371 * acos(cos(radians(${lat})) * cos(radians(lat)) * cos(radians(${lng}) - radians(lng)) + sin(radians(${lat})) * sin(radians(lat))))`, 'distance')
                 .where(categoryId ? `business.businessCategoryId = :categoryId` : '1=1', { categoryId })
                 .andWhere('business.isPublic = true')
                 .innerJoinAndSelect('business.businessCategory', 'businessCategory')
-                .innerJoinAndSelect('business.businessAddress', 'businessAddress', '(6371 * acos(cos(radians(:lat)) * cos(radians(lat)) * cos(radians(:lng) - radians(lng)) + sin(radians(:lat)) * sin(radians(lat)))) <= 10', { lat, lng })
+                .innerJoinAndSelect('business.businessAddress', 'businessAddress', '(6371 * acos(cos(radians(:lat)) * cos(radians(lat)) * cos(radians(:lng) - radians(lng)) + sin(radians(:lat)) * sin(radians(lat)))) <= :kms', { lat, lng, kms })
+                .orderBy('distance', 'ASC')
                 .getMany();
         });
     }

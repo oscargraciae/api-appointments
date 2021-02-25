@@ -28,16 +28,22 @@ export class Business extends BaseEntity{
   isActive: boolean
 
   @Column({ default: false })
+  isCompleted: boolean
+
+  @Column({ default: false })
   isPublic: boolean
 
   @Column({ default: false })
-  isCompleted: boolean
+  hasParallelBookings: boolean
+
+  @Column({ default: true })
+  hasBookingConfimation: boolean
 
   @ManyToOne(() => BusinessCategory, businessCategory => businessCategory.business)
   @JoinColumn()
   businessCategory: BusinessCategory;
 
-  @Column()
+  @Column({ nullable: true })
   businessCategoryId: number
 
   @OneToOne(() => BusinessAddress, businessAddress => businessAddress.business)
@@ -57,7 +63,6 @@ export class Business extends BaseEntity{
 
   @CreateDateColumn()
   createdAt = new Date()
-
 
   @UpdateDateColumn()
   updatedAt = new Date()

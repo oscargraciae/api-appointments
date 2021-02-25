@@ -1,6 +1,7 @@
 import { Response } from "express";
-import { getConnection } from "typeorm";
+import { Between, getConnection } from "typeorm";
 
+import { Booking } from "../../entity/Booking";
 import { Business } from "../../entity/Business";
 import { BusinessFile } from "../../entity/BusinessFile";
 
@@ -11,14 +12,21 @@ class BusinessController {
 
   async getBusiness(req: MyRequest, res: Response) {
     try {
-      let { lat, lng, categoryId } : any = req.query;
+      let { lat, lng, categoryId, zoom } : any = req.query;
+      
+      let kms = 5;
+
+      if (zoom) {
+        kms = 40000 / 2**zoom * 2;
+        console.log('kms', kms);
+      }
       
       if (!lat && lng) {
         lat = 25.6866142;
         lng = -100.3161126;
       }
       
-      const business = await new BusinessService().getAll({ lat, lng }, categoryId);
+      const business = await new BusinessService().getAll(kms, { lat, lng }, categoryId);
       // const business = await Business.find({
       //   where: { isActive: true },
       //   relations: ['businessAddress']
@@ -35,10 +43,6 @@ class BusinessController {
   async get(req: MyRequest, res: Response) {
     try {
       const id : number = Number(req.params.id);
-      // const business = await Business.findOne({
-      //   where: { id },
-      //   relations: ['businessAddress', 'businessCategory', 'hours', 'bussinessService'],
-      // });
       const business = await getConnection()
         .getRepository(Business)
         .createQueryBuilder('business')
@@ -48,12 +52,19 @@ class BusinessController {
         .leftJoinAndSelect('business.hours', 'hours')
         .where("business.id = :id", { id })
         .getOne();
+  
+      return res.json({ success: true, business });
+    } catch (error) {
+      return res.json({ success: false, message: error.message });
+    }
+  }
 
-      return res.json({
-        success: true,
-        business,
-        mensaje: 'Hola prueba cambio de docker r'
-      })
+  async getAvailableTime(req: MyRequest, res: Response) {
+    try {
+      let { startTime, endTime } :any = req.query;
+      const bookings = await Booking.find({ where: { businessId: req.params.id, bookingDate: Between(startTime, endTime) } });
+    
+      return res.json({ bookings });
     } catch (error) {
       return res.json({ success: false, message: error.message });
     }

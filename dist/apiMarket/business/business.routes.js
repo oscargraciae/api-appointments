@@ -9,6 +9,7 @@ const business = new business_controller_1.default();
 const router = express_1.Router();
 router.get('/', business.getBusiness);
 router.get('/:id', business.get);
+router.get('/:id/time', business.getAvailableTime);
 router.get('/:id/photos', business.getPhotos);
 exports.default = router;
 //# sourceMappingURL=business.routes.js.map
