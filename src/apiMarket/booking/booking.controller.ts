@@ -7,6 +7,7 @@ import { BusinessService } from "../../entity/BusinessService";
 import { MyRequest } from "../../config/types";
 import { Booking } from "../../entity/Booking";
 import { sendMailReservation } from "../../mails/mails";
+// import { createNotification } from "../../utils/notifications";
 
 export class BookingController {
   
@@ -59,6 +60,7 @@ export class BookingController {
         console.log('Datos de negocio', JSON.stringify(data));
         
         if (data) {
+          // createNotification(data);
           sendMailReservation(data);
         }
       }
