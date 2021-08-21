@@ -26,6 +26,8 @@ export class BookingController {
       const { status, statuses, dateEnd, startDate } :any = req.query;
 
       const where :any = {};
+      console.log('req.user.businessUser.businessId', req.user.businessUser.businessId);
+      
       where.businessId = req.user.businessUser.businessId;
       
       if (statuses) {

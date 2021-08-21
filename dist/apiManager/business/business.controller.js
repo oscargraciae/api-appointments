@@ -24,6 +24,7 @@ const Business_1 = require("../../entity/Business");
 const BusinessHour_1 = require("../../entity/BusinessHour");
 const BusinessFile_1 = require("../../entity/BusinessFile");
 const User_1 = require("../../entity/User");
+const BusinessAddress_1 = require("../../entity/BusinessAddress");
 const mails_1 = require("../../mails/mails");
 const s3 = new aws_sdk_1.S3({ region: 'us-east-2', credentials: { accessKeyId: 'AKIAX64L7XCVTA7JXFEM', secretAccessKey: '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' } });
 const convertToJpg = (input) => __awaiter(void 0, void 0, void 0, function* () {
@@ -57,12 +58,14 @@ class BusinessController {
             var bussinessId = 0;
             try {
                 const body = req.body;
+                const bodyAddress = req.body;
                 business = yield Business_1.Business.create(body).save();
                 if (!business) {
                     return res.json({ success: false });
                 }
                 bussinessId = business.id;
                 yield BusinessUser_1.BusinessUser.create({ userId: req.session.userId, businessId: business.id }).save();
+                yield BusinessAddress_1.BusinessAddress.create(Object.assign(Object.assign({}, bodyAddress), { businessId: business.id })).save();
                 const user = yield User_1.User.findOne({ id: req.session.userId });
                 if (user) {
                     mails_1.sendMailWelcomeStore(user.email);

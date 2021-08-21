@@ -4,7 +4,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 // import redis from 'ioredis';
-import Redis from "ioredis";
+// import Redis from "ioredis";
 import session from 'express-session';
 import morgan from 'morgan';
 import sgMail from '@sendgrid/mail';
@@ -16,7 +16,7 @@ import { COOKIE_NAME, DOMAIN_NAME, __prod__ } from './config/constants';
 import routesMarket from './config/routesMarket';
 import setupSocket from './config/sockets';
 
-const RedisStore = require('connect-redis')(session);
+// const RedisStore = require('connect-redis')(session);
 
 require('dotenv-flow').config();
 
@@ -34,25 +34,26 @@ const main = () => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   
-  app.use(cors({
-    origin: ['http://localhost:8002', 'http://localhost:8000', 'https://reserly.mx',],
-    credentials: true,
-  }));
+  app.use(cors({ origin: '*' }));
+  // app.use(cors({
+  //   origin: ['http://localhost:8002', 'http://localhost:8000', 'https://reserly.mx',],
+  //   credentials: true,
+  // }));
 
   app.use(morgan('dev'));
   
   app.set("trust proxy", 1);
   // const redisClient = redis.createClient({ host: 'redis' });
   // const redisClient = redis.createClient();
-  const redis = new Redis();
+  // const redis = new Redis();
   app.use(session({
     // proxy: true, // NODE_ENV === 'production'
     name: COOKIE_NAME,
     secret: 'secretkey',
-    store: new RedisStore({ 
-      client: redis,
-      disableTouch: true,
-    }),
+    // store: __prod__ ? new RedisStore({ 
+    //   client: redis,
+    //   disableTouch: true,
+    // }) : MemoryStore,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
       httpOnly: false,

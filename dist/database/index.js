@@ -25,6 +25,8 @@ const Review_1 = require("../entity/Review");
 const BusinessHour_1 = require("../entity/BusinessHour");
 const constants_1 = require("../config/constants");
 const setupDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('CVontra', process.env.DATABASE_PASSWORD);
+    console.log('SENDGRID_API_KEY', process.env.SENDGRID_API_KEY);
     yield typeorm_1.createConnection({
         host: process.env.DATABASE_HOST,
         type: 'postgres',

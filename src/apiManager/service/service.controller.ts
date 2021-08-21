@@ -21,6 +21,8 @@ export class ServiceController {
   async create(req: MyRequest, res: Response)  {
     try {
       const body : BusinessService = req.body;
+      console.log('BODY REQUEST SERVICE', body);
+      
       const businessId : number = Number(req.params.businessId);
       const service = await BusinessService.create({...body, businessId }).save();
       return res.json({ success: true, service })

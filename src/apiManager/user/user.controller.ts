@@ -12,14 +12,14 @@ class UserController {
       const { email, password } = req.body;
       const { user, isAuth, message } = await auth(email, password);
       if (!isAuth || !user) {
-        return res.json({ success: false, message });
+        return res.status(400).json({ success: false, message });
       }
       
       req.session!.userId = user.id;
       
       return res.json({ success: true, user });
     } catch (error) {
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: error.message,
       });

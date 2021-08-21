@@ -8,7 +8,7 @@
    "scripts": {
       "watch": "tsc -w",
       "build": "tsc",
-      "dev": "NODE_ENV=development DEBUG=http nodemon dist/index.js",
+      "dev": "nodemon dist/index.js SET NODE_ENV=development DEBUG=http",
       "start": "NODE_ENV=production node dist/index.js"
    },
    "dependencies": {

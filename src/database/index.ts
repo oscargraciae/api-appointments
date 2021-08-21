@@ -18,6 +18,9 @@ import { __prod__ } from '../config/constants';
 
 
 const setupDB = async () => {
+  console.log('CVontra', process.env.DATABASE_PASSWORD);
+  console.log('SENDGRID_API_KEY', process.env.SENDGRID_API_KEY);
+  
   await createConnection({
     host: process.env.DATABASE_HOST,
     type: 'postgres',

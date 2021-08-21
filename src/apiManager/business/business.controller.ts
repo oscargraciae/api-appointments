@@ -12,6 +12,7 @@ import { Business } from "../../entity/Business";
 import { BusinessHour } from "../../entity/BusinessHour";
 import { BusinessFile } from "../../entity/BusinessFile";
 import { User } from "../../entity/User";
+import { BusinessAddress } from "../../entity/BusinessAddress";
 
 import { MyRequest } from "../../config/types";
 import { addContactBusiness, sendMailWelcomeStore } from "../../mails/mails";
@@ -28,22 +29,6 @@ class BusinessController {
   
   async getBusiness(req: MyRequest, res: Response) {
     try {
-      // const business = await BusinessUser.findOne({
-      //   where: { userId: req.session.userId },
-      //   relations: ['business']
-      // });
-
-      // const business = await Business.findOne({
-      //   // where: { userId: req.session.userId },
-      //   relations: ['businessUser'],
-      //   where: {
-      //     businessUser: {
-      //       userId: req.session.userId,
-      //     }
-      // }
-      //   // where: { 'businessUser.userId': req.session.id },
-      // });
-
       const business = await getConnection()
         .getRepository(Business)
         .createQueryBuilder('business')
@@ -66,6 +51,7 @@ class BusinessController {
     var bussinessId : number = 0;
     try {
       const body: Business = req.body;
+      const bodyAddress: BusinessAddress = req.body;
       business = await Business.create(body).save();
       if (!business) {
         return res.json({ success: false });
@@ -74,6 +60,8 @@ class BusinessController {
       bussinessId = business.id;
       await BusinessUser.create({ userId: req.session.userId, businessId: business.id }).save();
 
+      await BusinessAddress.create({ ...bodyAddress, businessId: business.id }).save();
+      // Registrar direccion de negocio
 
       const user = await User.findOne({ id: req.session.userId });
 
@@ -171,40 +159,6 @@ class BusinessController {
     }
   }
 
-  // async uploadPhotos (req: MyRequest, res: Response) {
-  //   try {
-  //     console.log('Fotos', req.files);
-  //     console.log('Fotos', req.files);
-      
-  //     if (req.files.length > 0) {
-  //       req.files.forEach(async (item :any) => {
-  //         const miniBuffer = await imagemin.buffer(item.buffer, {
-  //           plugins: [convertToJpg, mozjpeg({ quality: 80 })]
-  //         });
-  //         console.log('miniBuffer', miniBuffer);
-          
-  //         const fileName = `${req.user.businessUser.businessId}-${uuidv4()}${path.extname(item.originalname)}`
-  //         let resp = await s3.upload({
-  //           Bucket: 'reserly-dev',
-  //           Key: `${req.user.businessUser.businessId}/${fileName}`,
-  //           Body: miniBuffer,
-  //           ACL: 'public-read',
-  //         }).promise();
-
-  //         await BusinessFile.create({ file: resp.Location, businessId: req.user.businessUser.businessId }).save();
-  //       })
-  //     }
-
-  //     const files = await BusinessFile.find({ where: { businessId: req.user.businessUser.businessId } });
-      
-  //     // await Business.update({ id: req.user.businessUser.businessId }, { cover: response.Location });
-
-  //     return res.json({ success: true, message: 'subiendo imagen', data: req.file, files });
-  //   } catch (error) {
-  //     // throw error;
-  //     return res.json({ success: false, message: error.message });
-  //   }
-  // }
 
   async uploadPhoto (req: MyRequest, res: Response) {
     try {

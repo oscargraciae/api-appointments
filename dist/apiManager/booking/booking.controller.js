@@ -34,6 +34,7 @@ class BookingController {
             try {
                 const { status, statuses, dateEnd, startDate } = req.query;
                 const where = {};
+                console.log('req.user.businessUser.businessId', req.user.businessUser.businessId);
                 where.businessId = req.user.businessUser.businessId;
                 if (statuses) {
                     where.bookingStatusId = typeorm_1.In(statuses);
